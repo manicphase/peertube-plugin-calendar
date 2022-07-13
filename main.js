@@ -5,9 +5,11 @@ async function register ({
   storageManager,
   videoCategoryManager,
   videoLicenceManager,
-  videoLanguageManager
+  videoLanguageManager,
+  router
 }) {
-
+  const router = getRouter()
+  router.get('/ping', (req, res) => res.json({ message: 'pong' }))
 }
 
 async function unregister () {
