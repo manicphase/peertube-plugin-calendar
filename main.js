@@ -6,7 +6,7 @@ async function register ({
   videoCategoryManager,
   videoLicenceManager,
   videoLanguageManager,
-  router
+  getRouter
 }) {
   const router = getRouter()
   router.get('/ping', (req, res) => res.json({ message: 'pong' }))
