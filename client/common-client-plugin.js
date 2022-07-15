@@ -3,7 +3,7 @@ async function getLatestVideos () {
   let request = await fetch(path);
   let response = await request.json();
   console.log(response);
-  return response;
+  return response.data;
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
