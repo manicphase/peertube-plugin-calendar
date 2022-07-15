@@ -31,7 +31,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     route: '/calendar',
     onMount: ({ rootEl }) => {
       let response = getLatestVideos();
-      rootEl.innerHTML = response;
+      rootEl.innerHTML = response.data[0];
     }
   })
 }
