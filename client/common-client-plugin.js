@@ -1,3 +1,10 @@
+async function getLatestVideos () {
+  const path = './api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=true&nsfw=false'; 
+  let request = await fetch(path);
+  let response = await request.json();
+  return response;
+}
+
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
@@ -23,9 +30,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      const path = './api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=true&nsfw=false'; 
-      let request = await fetch(path);
-      let response = await request.json();
+      response = getLatestVideos();
       rootEl.innerHTML = response;
     }
   })
