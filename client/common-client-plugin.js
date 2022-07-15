@@ -31,7 +31,7 @@ async function register ({ registerClientRoute, registerHook, peertubeHelpers })
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      let response = getLatestVideos();
+      let response = await getLatestVideos();
       window.response = response;
       rootEl.innerHTML = response.data[0];
     }
