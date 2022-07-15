@@ -6,6 +6,10 @@ async function getLatestVideos () {
   return response;
 }
 
+function getStartTime(obj) {
+  return new Date(obj.name.split("-")[1]).getTime()
+}
+
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
@@ -33,7 +37,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       getLatestVideos().then( function (response) {
         window.response = response;
-        rootEl.innerHTML = response.data[0].name;
+        rootEl.innerHTML = getStartTime(response.data[0]);
       })
     }
   })
