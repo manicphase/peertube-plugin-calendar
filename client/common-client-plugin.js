@@ -5,21 +5,14 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     handler: (result) => {
       return [
         {
-          key: 'in-my-stuff',
-          title: 'In my stuff',
+          key: 'plugin-pages',
+          title: 'Plugins',
           links: [
             {
-              path: '/about',
-              icon: 'alert',
-              shortLabel: 'About',
-              label: 'About'
-            },
-
-            {
-              path: peertubeHelpers.getBasePluginClientPath() + '/my-super/route',
+              path: peertubeHelpers.getBasePluginClientPath() + '/calendar',
               icon: '',
-              shortLabel: 'super route',
-              label: 'Super route'
+              shortLabel: 'calendar',
+              label: 'Calendar'
             }
           ]
         }
