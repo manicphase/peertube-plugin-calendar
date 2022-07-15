@@ -1,5 +1,10 @@
-function register ({ registerHook, peertubeHelpers }) {
-  console.log('Hello world')
+function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
+  registerClientRoute({
+    route: 'calendar',
+    onMount: ({ rootEl }) => {
+      rootEl.innerHTML = 'hello'
+    }
+  })
 }
 
 export {
