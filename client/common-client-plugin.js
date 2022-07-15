@@ -1,5 +1,5 @@
 async function getLatestVideos () {
-  const path = './api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=true&nsfw=false'; 
+  let path = '/api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=true&nsfw=false'; 
   let request = await fetch(path);
   let response = await request.json();
   return response;
