@@ -28,7 +28,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   })
 
   registerClientRoute({
-    route: 'calendar',
+    route: '/calendar',
     onMount: ({ rootEl }) => {
       rootEl.innerHTML = 'hello'
     }
