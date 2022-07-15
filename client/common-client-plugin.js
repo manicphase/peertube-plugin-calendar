@@ -34,7 +34,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
       getLatestVideos().then( function (response) {
         window.response = response;
         rootEl.innerHTML = response.data[0];
-      }
+      })
     }
   })
 }
