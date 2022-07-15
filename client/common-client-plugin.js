@@ -23,7 +23,8 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = 'hello'
+      const jsData = require('./api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=true&nsfw=false'); 
+      rootEl.innerHTML = jsData;
     }
   })
 }
