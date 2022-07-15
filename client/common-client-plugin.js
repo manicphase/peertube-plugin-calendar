@@ -3,10 +3,10 @@ async function getLatestVideos () {
   let request = await fetch(path);
   let response = await request.json();
   console.log(response);
-  return response.data;
+  return response;
 }
 
-function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
+async function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
     target: 'filter:left-menu.links.create.result',
