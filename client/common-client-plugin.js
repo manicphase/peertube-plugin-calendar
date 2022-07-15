@@ -7,7 +7,10 @@ async function getLatestVideos () {
 }
 
 function getStartTime(obj) {
-  return new Date(obj.name.split("-")[1]).getTime()
+  let d = new Date(obj.name.split("-")[1]).getTime()
+  if (d) {
+    return d
+  } else return 0
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
@@ -36,6 +39,10 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     route: '/calendar',
     onMount: ({ rootEl }) => {
       getLatestVideos().then( function (response) {
+        for (let i=0; i<response.data.length; i++) {
+          response.data[i].startTime = getStartTime(response.data[0]);
+          response.data[i].endTime = response.data[i].startTime + response.data[i].duration; 
+        }
         window.response = response;
         rootEl.innerHTML = getStartTime(response.data[0]) + " " + getStartTime(response.data[1]);
       })
