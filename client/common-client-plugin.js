@@ -33,7 +33,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       getLatestVideos().then( function (response) {
         window.response = response;
-        rootEl.innerHTML = response.data[0];
+        rootEl.innerHTML = response.data[0].name;
       })
     }
   })
