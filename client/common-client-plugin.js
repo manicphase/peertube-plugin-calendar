@@ -6,7 +6,7 @@ async function getLatestVideos () {
   return response;
 }
 
-async function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
+function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
     target: 'filter:left-menu.links.create.result',
@@ -31,9 +31,10 @@ async function register ({ registerClientRoute, registerHook, peertubeHelpers })
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      let response = await getLatestVideos();
-      window.response = response;
-      rootEl.innerHTML = response.data[0];
+      getLatestVideos().then( function (response) {
+        window.response = response;
+        rootEl.innerHTML = response.data[0];
+      }
     }
   })
 }
