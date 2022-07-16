@@ -37,7 +37,7 @@ function setAsMainVideo(videoID) {
     document.getElementById("minivideos").appendChild(mainvideodiv.children[0])
   }
   let smallVideo = document.getElementById(`${videoID}_div`);
-  mainvideodiv.appendChild(smallVideo).children[0]
+  mainvideodiv.appendChild(smallVideo.children[0]);
 }
 
 window.setAsMainVideo = setAsMainVideo;
