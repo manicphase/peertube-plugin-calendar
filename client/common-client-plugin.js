@@ -13,7 +13,7 @@ function getStartTime(obj) {
   } else return 0
 }
 
-function makeEmbedEmbed(videoID) {
+function makeEmbedCode(videoID) {
   return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
 }
 
@@ -55,7 +55,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
         let mainvideodiv = document.getElementById("mainvideo");
-        mainvideodiv.innerHTML = makeVideoEmbed('5dc2bbc0-7eda-4bda-8659-d361795e8fb2');
+        mainvideodiv.innerHTML = makeEmbedCode('5dc2bbc0-7eda-4bda-8659-d361795e8fb2');
         //rootEl.innerHTML = '<div id="mainpanel"><div id="mainvideo"></div></div>'
         //rootEl.innerHTML = '<input type="text" id="timestamp"/>'
         //rootEl.innerHTML = '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/5dc2bbc0-7eda-4bda-8659-d361795e8fb2?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
