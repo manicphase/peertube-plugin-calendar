@@ -59,7 +59,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
           response.data[i].startTime = getStartTime(response.data[0]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
           vidlist = vidlist + `<div onclick="changeMainVideo("${response.data[i].uuid.trim()}") id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
-          console.log(response.data[i].uuid.trim());
+          console.log(r`<div onclick="changeMainVideo("${response.data[i].uuid.trim()}") id="${response.data[i].shortUUID}">${response.data[i].name}</div>`);
         }
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
