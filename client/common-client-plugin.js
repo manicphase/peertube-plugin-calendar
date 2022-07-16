@@ -14,6 +14,7 @@ function getStartTime(obj) {
 }
 
 function updateTime(e) {
+  console.log(e);
   document.getElementById("timediv").innerHTML = e.progress
 }
 
