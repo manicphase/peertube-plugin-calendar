@@ -28,6 +28,7 @@ function changeMainVideo(videoID) {
   mainvideodiv.innerHTML = embedCode;
   window.mainPlayer = new PeerTubePlayer(document.getElementById("mainplayer"));
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
+  window.currentObject = response.data.map(n => {n.uuid === videoID})
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
