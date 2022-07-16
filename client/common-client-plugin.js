@@ -53,7 +53,7 @@ function updateMiniVideos() {
           let el = document.createElement("div")
           el.setAttribute("style", "width:200px");
           el.setAttribute("onclick", `setAsMainVideo("${window.currentVideos[i].uuid}")`)
-          el.setAttribute("id", `"${window.currentVideos[i].uuid}_div"`)
+          el.setAttribute("id", `${window.currentVideos[i].uuid}_div`)
           el.innerHTML = makeEmbedCode(window.currentVideos[i].uuid) + `<button type="button" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'>Expand</button>`
           minividdiv.appendChild(el)
           //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
