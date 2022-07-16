@@ -79,7 +79,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         window.response = response;
         let vidlist = "";
         for (let i=0; i<response.data.length; i++) {
-          response.data[i].startTime = getStartTime(response.data[0]);
+          response.data[i].startTime = getStartTime(response.data[i]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
           let divdata = `<div onclick='changeMainVideo("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
           vidlist += divdata;
