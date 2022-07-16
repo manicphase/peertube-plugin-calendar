@@ -19,9 +19,9 @@ function updateTime(e) {
   document.getElementById("timediv").innerHTML = window.globalTime;
   let currentVideos = response.data.filter(function(n) {
     if (globalTime > n.startTime && globalTime < n.endTime) {
-      //console.log(n.startTime);
-      //console.log(globalTime);
-      //console.log(n.endTime);
+      console.log(n.startTime);
+      console.log(globalTime);
+      console.log(n.endTime);
       return true;
     }
   })
