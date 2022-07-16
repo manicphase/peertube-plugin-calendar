@@ -36,12 +36,10 @@ function setAsMainVideo(videoID) {
   let smallVideo = document.getElementById(videoID);
   console.log(smallVideo);
   if (mainvideodiv.children.length > 0) {
-    //document.getElementById("minivideos").appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
-    //let id = mainvideodiv.children[0].id 
     mainvideodiv.children[0].remove();
-    //document.getElementById("minivideos").appendChild(mainvideodiv.children[0])
   }
   mainvideodiv.appendChild(smallVideo);
+  smallVideoDiv.remove();
   changeMainVideo(videoID);
 }
 
@@ -69,7 +67,7 @@ function updateMiniVideos() {
 function changeMainVideo(videoID) {
   let embedCode = makeEmbedCode(videoID);
   let mainvideodiv = document.getElementById("mainvideo");
-  mainvideodiv.innerHTML = embedCode;
+  //mainvideodiv.innerHTML = embedCode;
   window.mainPlayer = new PeerTubePlayer(document.getElementById("mainvideo").children[0]);
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
@@ -111,7 +109,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[i]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          let divdata = `<div onclick='changeMainVideo("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
+          let divdata = `<div onclick='setAsMainVideo("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
           vidlist += divdata;
         }
         window.globalTime = response.data[0].startTime;
