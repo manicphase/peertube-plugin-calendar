@@ -13,6 +13,10 @@ function getStartTime(obj) {
   } else return 0
 }
 
+function updateTime(e) {
+  document.getElementById("timediv").innerHTML = e.progress
+}
+
 function makeEmbedCode(videoID) {
   return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
 }
@@ -21,7 +25,8 @@ function changeMainVideo(videoID) {
   let embedCode = makeEmbedCode(videoID);
   let mainvideodiv = document.getElementById("mainvideo");
   mainvideodiv.innerHTML = embedCode;
-  window.mainPlayer = PeerTubePlayer(document.getElementById("mainplayer"));
+  window.mainPlayer = new PeerTubePlayer(document.getElementById("mainplayer"));
+  window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
