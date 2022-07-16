@@ -41,7 +41,7 @@ function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
   for (let i=0; currentVideos.length; i++) {
     if (!document.getElementById(currentVideos[i].uuid)) {
-      minividdiv.insertAdjacentElement(makeMiniEmbedCode(currentVideos[i].uuid))
+      minividdiv.insertAdjacentElement("afterend", makeMiniEmbedCode(currentVideos[i].uuid))
     }
   }
 }
