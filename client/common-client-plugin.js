@@ -34,7 +34,7 @@ function makeEmbedCode(videoID) {
 }
 
 function makeMiniEmbedCode(videoID) {
-  return `<iframe id="${videoId}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="300" height="200" frameborder="0"></iframe>`
+  return `<iframe id="${videoID}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="300" height="200" frameborder="0"></iframe>`
 }
 
 function updateMiniVideos() {
