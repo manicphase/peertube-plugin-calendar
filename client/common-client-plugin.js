@@ -13,6 +13,10 @@ function getStartTime(obj) {
   } else return 0
 }
 
+function makeEmbedEmbed(videoID) {
+  return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
+}
+
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
@@ -38,16 +42,20 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div></div>'
+      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
+        let vidlist = "";
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[0]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
+          vidlist = vidlist + '<div>' + response.data[i].name + '</div>'
         }
-        let mainvideodiv = document.getElementById("mainvideo")
-        mainvideodiv.innerHTML = '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/5dc2bbc0-7eda-4bda-8659-d361795e8fb2?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
+        let vidlistdiv = document.getElementById("vidlist");
+        vidlistdiv.innerHTML = vidlist;
+        let mainvideodiv = document.getElementById("mainvideo");
+        mainvideodiv.innerHTML = makeVideoEmbed('5dc2bbc0-7eda-4bda-8659-d361795e8fb2');
         //rootEl.innerHTML = '<div id="mainpanel"><div id="mainvideo"></div></div>'
         //rootEl.innerHTML = '<input type="text" id="timestamp"/>'
         //rootEl.innerHTML = '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/5dc2bbc0-7eda-4bda-8659-d361795e8fb2?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
