@@ -15,7 +15,7 @@ function getStartTime(obj) {
 
 function updateTime(e) {
   //console.log(e);
-  document.getElementById("timediv").innerHTML = e.position
+  document.getElementById("timediv").innerHTML = window.mainVideoStats.startTime + (e.position * 1000)
 }
 
 function makeEmbedCode(videoID) {
@@ -29,6 +29,7 @@ function changeMainVideo(videoID) {
   window.mainPlayer = new PeerTubePlayer(document.getElementById("mainplayer"));
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
   window.currentObject = response.data.map(n => {n.uuid === videoID})
+  window.mainVideoStats = response.data.filter(n => n.uuid === "0aefb77d-9893-4d10-a2e5-c9b8a271d49c")[0];
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
