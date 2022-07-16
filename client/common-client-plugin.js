@@ -50,6 +50,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
+      window.changeMainVideo = changeMainVideo;
 
       getLatestVideos().then( function (response) {
         let vidlist = "";
