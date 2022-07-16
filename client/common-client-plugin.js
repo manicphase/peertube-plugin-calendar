@@ -21,7 +21,7 @@ function changeMainVideo(videoID) {
   let embedCode = makeEmbedCode(videoID);
   let mainvideodiv = document.getElementById("mainvideo");
   mainvideodiv.innerHTML = embedCode;
-  window.mainPlayer = mainvideodiv;
+  window.mainPlayer = PeerTubePlayer(document.getElementById("mainplayer"));
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
