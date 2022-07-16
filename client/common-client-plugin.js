@@ -40,7 +40,7 @@ function updateMiniVideos() {
       console.log(window.currentVideos);
       console.log(i);
       if (!document.getElementById(window.currentVideos[i].uuid)) {
-        if (window.currentVideos[i].uuid !== window.currentObject.uuid) {
+        if (window.currentVideos[i].uuid !== window.mainVideoStats.uuid) {
           minividdiv.insertAdjacentHTML("afterend", makeMiniEmbedCode(window.currentVideos[i].uuid))
         }
       }
@@ -53,8 +53,7 @@ function changeMainVideo(videoID) {
   mainvideodiv.innerHTML = embedCode;
   window.mainPlayer = new PeerTubePlayer(document.getElementById("mainplayer"));
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
-  window.currentObject = response.data.map(n => {n.uuid === videoID})
-  window.mainVideoStats = response.data.filter(n => n.uuid === "0aefb77d-9893-4d10-a2e5-c9b8a271d49c")[0];
+  window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
