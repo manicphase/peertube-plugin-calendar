@@ -1,3 +1,5 @@
+PeerTubePlayer = require('@peertube/embed-api');
+
 async function getLatestVideos () {
   let path = '/api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=true&nsfw=false'; 
   let request = await fetch(path);

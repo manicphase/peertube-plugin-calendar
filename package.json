@@ -35,10 +35,9 @@
     "fr-FR": "./languages/fr.json"
   },
   "devDependencies": {
-    "esbuild": "^0.14.49"
+    "@peertube/embed-api": "0.0.5"
   },
   "dependencies": {
-    "@peertube/embed-api": "0.0.5",
-    "yarn": "^1.22.19"
+    "@peertube/embed-api": "0.0.5"
   }
 }
