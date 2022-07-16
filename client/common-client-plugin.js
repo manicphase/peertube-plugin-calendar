@@ -1,5 +1,3 @@
-import { PeerTubePlayer } from '@peertube/embed-api';
-
 PeerTubePlayer = require('@peertube/embed-api');
 
 async function getLatestVideos () {
