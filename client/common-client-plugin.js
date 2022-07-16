@@ -17,6 +17,12 @@ function makeEmbedCode(videoID) {
   return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
 }
 
+function changeMainVideo(videoID) {
+  let embedCode = makeEmbedCode(videoID);
+  let mainvideodiv = document.getElementById("mainvideo");
+  mainvideodiv.innerHTML = makeEmbedCode(embedCode);
+}
+
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
@@ -50,7 +56,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[0]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          vidlist = vidlist + '<div onClick="makeEmbedCode(' + response.data[i].uuid + ')>' + response.data[i].name + '</div>'
+          vidlist = vidlist + '<div onclick="ChangeMainVideo("' + response.data[i].uuid + '")>' + response.data[i].name + '</div>'
         }
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
