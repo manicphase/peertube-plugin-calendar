@@ -40,14 +40,13 @@ function makeMiniEmbedCode(videoID) {
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
   for (let i=0; currentVideos.length; i++) {
-    if (currentVideos[i] !== undefined) {
+    
       console.log(i);
       //if (!document.getElementById(currentVideos[i].uuid)) {
       //  if (currentVideos[i].uuid !== currentObject.uuid) {
           //minividdiv.insertAdjacentHTML("afterend", makeMiniEmbedCode(currentVideos[i].uuid))
       //  }
       //}
-    }
   }
 }
 
