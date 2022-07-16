@@ -33,7 +33,7 @@ function makeEmbedCode(videoID) {
 function setAsMainVideo(videoID) {
   let mainvideodiv = document.getElementById("mainvideo");
   let smallVideoDiv = document.getElementById(`${videoID}_div`);
-  let smallVideo = document.getElementById(`${videoID}`);
+  let smallVideo = document.getElementById(`"${videoID}"`);
   console.log(videoID);
   if (mainvideodiv.children.length > 0) {
     //document.getElementById("minivideos").appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
