@@ -37,7 +37,9 @@ function setAsMainVideo(videoID) {
   console.log(smallVideo);
   if (mainvideodiv.children.length > 0) {
     //document.getElementById("minivideos").appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
-    document.getElementById("minivideos").appendChild(mainvideodiv.children[0])
+    //let id = mainvideodiv.children[0].id 
+    mainvideodiv.children[0].remove();
+    //document.getElementById("minivideos").appendChild(mainvideodiv.children[0])
   }
   mainvideodiv.appendChild(smallVideo);
 }
