@@ -27,12 +27,9 @@ function updateTime(e) {
 }
 
 function makeEmbedCode(videoID) {
-  return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
-}
-
-function makeMiniEmbedCode(videoID) {
   return `<iframe id="${videoID}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="300" height="200" frameborder="0"></iframe>`
 }
+
 
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
@@ -41,7 +38,7 @@ function updateMiniVideos() {
       console.log(i);
       if (!document.getElementById(window.currentVideos[i].uuid)) {
         if (window.currentVideos[i].uuid !== window.mainVideoStats.uuid) {
-          minividdiv.insertAdjacentHTML("afterend", makeMiniEmbedCode(window.currentVideos[i].uuid))
+          minividdiv.insertAdjacentHTML("afterend", `<div style="width:200px;" id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
       }
   }
