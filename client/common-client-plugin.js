@@ -48,7 +48,7 @@ function updateMiniVideos() {
       console.log(i);
       if (!document.getElementById(window.currentVideos[i].uuid)) {
         if (window.currentVideos[i].uuid !== window.mainVideoStats.uuid) {
-          minividdiv.insertAdjacentHTML("afterend", `<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
+          minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
       }
   }
