@@ -18,7 +18,12 @@ function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
   document.getElementById("timediv").innerHTML = window.globalTime;
   let currentVideos = response.data.filter(function(n) {
-    if (globalTime > n.startTime && globalTime < n.endTime) return true;
+    if (globalTime > n.startTime && globalTime < n.endTime) {
+      console.log(n.startTime);
+      console.log(globalTime);
+      console.log(n.endTime);
+      return true;
+    }
   })
   console.log(currentVideos);
 }
