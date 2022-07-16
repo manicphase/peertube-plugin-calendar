@@ -19,9 +19,6 @@ function updateTime(e) {
   document.getElementById("timediv").innerHTML = window.globalTime;
   let currentVideos = response.data.filter(function(n) {
     if (globalTime > n.startTime && globalTime < n.endTime) {
-      console.log(n.startTime);
-      console.log(globalTime);
-      console.log(n.endTime);
       return true;
     }
   })
@@ -42,9 +39,9 @@ function updateMiniVideos() {
   for (let i=0; i<window.currentVideos.length; i++) {
       console.log(window.currentVideos);
       console.log(i);
-      if (!document.getElementById(currentVideos[i].uuid)) {
-        if (currentVideos[i].uuid !== currentObject.uuid) {
-          minividdiv.insertAdjacentHTML("afterend", makeMiniEmbedCode(currentVideos[i].uuid))
+      if (!document.getElementById(window.currentVideos[i].uuid)) {
+        if (window.currentVideos[i].uuid !== window.currentObject.uuid) {
+          minividdiv.insertAdjacentHTML("afterend", makeMiniEmbedCode(window.currentVideos[i].uuid))
         }
       }
   }
