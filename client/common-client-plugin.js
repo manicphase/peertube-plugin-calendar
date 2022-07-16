@@ -26,6 +26,7 @@ function updateTime(e) {
     }
   })
   window.currentVideos = currentVideos;
+  updateMiniVideos();
 }
 
 function makeEmbedCode(videoID) {
