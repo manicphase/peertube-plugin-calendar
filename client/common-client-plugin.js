@@ -17,10 +17,18 @@ function updateTime(e) {
   //console.log(e);
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
   document.getElementById("timediv").innerHTML = window.globalTime;
+  let currentVideos = response.data.filter(function(n) {
+    if (globalTime > n.startTime && globalTime < n.endTime) return true;
+  })
+  console.log(currentVideos);
 }
 
 function makeEmbedCode(videoID) {
   return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
+}
+
+function makeMiniEmbedCode(videoID) {
+  return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="300" height="200" frameborder="0"></iframe>'
 }
 
 function changeMainVideo(videoID) {
