@@ -20,7 +20,7 @@ function makeEmbedCode(videoID) {
 function changeMainVideo(videoID) {
   let embedCode = makeEmbedCode(videoID);
   let mainvideodiv = document.getElementById("mainvideo");
-  mainvideodiv.innerHTML = makeEmbedCode(embedCode);
+  mainvideodiv.innerHTML = embedCode;
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
@@ -57,7 +57,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[0]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          vidlist = vidlist + '<div onclick="changeMainVideo("' + response.data[i].uuid.trim() + '")>' + response.data[i].name + '</div>'
+          vidlist = vidlist + `<div onclick="changeMainVideo("${response.data[i].uuid.trim()}")>${response.data[i].name}</div>`
         }
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
