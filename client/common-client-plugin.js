@@ -15,7 +15,8 @@ function getStartTime(obj) {
 
 function updateTime(e) {
   //console.log(e);
-  document.getElementById("timediv").innerHTML = window.mainVideoStats.startTime + (e.position * 1000)
+  window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
+  document.getElementById("timediv").innerHTML = window.globalTime;
 }
 
 function makeEmbedCode(videoID) {
