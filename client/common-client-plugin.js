@@ -18,7 +18,7 @@ function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
   document.getElementById("timediv").innerHTML = window.globalTime;
   let currentVideos = response.data.filter(function(n) {
-    if (globalTime > n.startTime && globalTime < n.endTime) {
+    if (globalTime >= n.startTime && globalTime < n.endTime) {
       return true;
     }
   })
@@ -30,6 +30,16 @@ function makeEmbedCode(videoID) {
   return `<iframe id="${videoID}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="100%" height="100%" frameborder="0"></iframe>`
 }
 
+function setAsMainVideo(videoID) {
+  let mainvideodiv = document.getElementById("mainvideo");
+  if (mainvideodiv.children.length > 0) {
+    //document.getElementById("minivideos").appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
+    document.getElementById("minivideos").appendChild(mainvideodiv.children[0])
+  }
+  let smallVideo = document.getElementById(`${videoID}_div`);
+  mainvideodiv.appendChild(smallVideo).children[0]
+}
+
 
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
@@ -38,7 +48,7 @@ function updateMiniVideos() {
       console.log(i);
       if (!document.getElementById(window.currentVideos[i].uuid)) {
         if (window.currentVideos[i].uuid !== window.mainVideoStats.uuid) {
-          minividdiv.insertAdjacentHTML("afterend", `<div style="width:200px;" id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
+          minividdiv.insertAdjacentHTML("afterend", `<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
       }
   }
@@ -52,6 +62,7 @@ function changeMainVideo(videoID) {
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
 }
+
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
@@ -78,7 +89,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo" style="width:700px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
+      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo" style="width:700px;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
       window.changeMainVideo = changeMainVideo;
 
@@ -91,18 +102,11 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
           let divdata = `<div onclick='changeMainVideo("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
           vidlist += divdata;
         }
+        window.globalTime = response.data[0].startTime;
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
-        changeMainVideo(response.data[0].uuid);
-        //let mainvideodiv = document.getElementById("mainvideo");
-        //mainvideodiv.innerHTML = makeEmbedCode('5dc2bbc0-7eda-4bda-8659-d361795e8fb2');
-        //window.mainPlayer = new PeerTubePlayer(document.getElementById("mainplayer"));
-        //window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
-        //rootEl.innerHTML = '<div id="mainpanel"><div id="mainvideo"></div></div>'
-        //rootEl.innerHTML = '<input type="text" id="timestamp"/>'
-        //rootEl.innerHTML = '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/5dc2bbc0-7eda-4bda-8659-d361795e8fb2?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>'
-        //window.PeerTubePlayer = PeerTubePlayer;
-        //rootEl.innerHTML = getStartTime(response.data[0]) + " " + getStartTime(response.data[1]);
+        updateMiniVideos();
+        //changeMainVideo(response.data[0].uuid);
       })
     }
   })
