@@ -21,6 +21,7 @@ function changeMainVideo(videoID) {
   let embedCode = makeEmbedCode(videoID);
   let mainvideodiv = document.getElementById("mainvideo");
   mainvideodiv.innerHTML = embedCode;
+  window.mainPlayer = mainvideodiv;
 }
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
@@ -48,7 +49,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div><div id="vidlist"></div></div>'
+      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div><div id="timediv"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
       window.changeMainVideo = changeMainVideo;
 
