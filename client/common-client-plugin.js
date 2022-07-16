@@ -53,6 +53,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
       window.changeMainVideo = changeMainVideo;
 
       getLatestVideos().then( function (response) {
+        window.response = response;
         let vidlist = "";
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[0]);
