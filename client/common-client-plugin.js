@@ -40,6 +40,7 @@ function setAsMainVideo(videoID) {
   mainvideodiv.appendChild(smallVideo).children[0]
 }
 
+window.setAsMainVideo = setAsMainVideo;
 
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
