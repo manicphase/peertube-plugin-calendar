@@ -25,7 +25,7 @@ function updateTime(e) {
       return true;
     }
   })
-  console.log(currentVideos);
+  window.currentVideos = currentVideos;
 }
 
 function makeEmbedCode(videoID) {
@@ -33,7 +33,16 @@ function makeEmbedCode(videoID) {
 }
 
 function makeMiniEmbedCode(videoID) {
-  return '<iframe id="mainplayer" src="https://video.manicphase.me/videos/embed/' + videoID + '?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="300" height="200" frameborder="0"></iframe>'
+  return `<iframe id="${videoId}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="300" height="200" frameborder="0"></iframe>`
+}
+
+function updateMiniVideos() {
+  let minividdiv = document.getElementById("minivideos")
+  for (let i=0; currentVideos.length; i++) {
+    if (!document.getElementById(currentVideos[i].uuid)) {
+      minividdiv.insertAdjacentElement(makeMiniEmbedCode(currentVideos[i].uuid))
+    }
+  }
 }
 
 function changeMainVideo(videoID) {
@@ -71,7 +80,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div><div id="timediv"></div><div id="vidlist"></div></div>'
+      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
       window.changeMainVideo = changeMainVideo;
 
