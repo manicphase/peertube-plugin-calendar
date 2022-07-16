@@ -38,7 +38,11 @@ function setAsMainVideo(videoID) {
   if (mainvideodiv.children.length > 0) {
     mainvideodiv.children[0].remove();
   }
-  mainvideodiv.appendChild(smallVideo);
+  if (smallVideo) {
+    mainvideodiv.appendChild(smallVideo);
+  } else {
+    mainvideodiv.innerHTML = makeEmbedCode(videoID)
+  }
   smallVideoDiv.remove();
   changeMainVideo(videoID);
 }
