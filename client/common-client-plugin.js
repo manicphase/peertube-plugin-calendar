@@ -50,7 +50,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[0]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          vidlist = vidlist + '<div>' + response.data[i].name + '</div>'
+          vidlist = vidlist + '<div onClick="makeEmbedCode(' + response.data[i].uuid + ')>' + response.data[i].name + '</div>'
         }
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
