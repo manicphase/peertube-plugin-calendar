@@ -1,7 +1,7 @@
 {
   "name": "peertube-plugin-calendar",
   "description": "Calender view for peertube",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "author": "Manicphase",
   "bugs": "https://github.com/manicphase/peertube-plugin-calendar",
   "clientScripts": [
@@ -36,5 +36,9 @@
   },
   "devDependencies": {
     "esbuild": "^0.14.49"
+  },
+  "dependencies": {
+    "@peertube/embed-api": "0.0.5",
+    "yarn": "^1.22.19"
   }
 }
