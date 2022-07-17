@@ -86,7 +86,7 @@ function syncMiniVideo(e, videoID) {
 window.players = {}
 
 function createLink() {
-  let path = `${window.location.href.split("?")[0]}?videoID=${mainPlayer.uuid}&timestamp=${Math.floor(globalTime)}`
+  let path = `${window.location.href.split("?")[0]}?videoID=${mainVideoStats.uuid}&timestamp=${Math.floor(globalTime)}`
   navigator.clipboard.writeText(path);
   alert(`copied "${path}" to clipboard`);
 }
@@ -156,6 +156,9 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         window.globalTime = response.data[0].startTime;
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.timestamp) window.globalTime = urlParams.timestamp;
+        if (urlParams.videoID) setAsMainVideo(urlParams.videoID);
         updateMiniVideos();
       })
     }
