@@ -42,7 +42,6 @@ function makeEmbedCode(videoID) {
 function handleMainPlaybackStatus(e) {
   updateTime(e);
   window.globalVolume = e.volume;
-  console.log("global volume", e.volume);
   if (e.playbackState === "ended") {
     let minividdiv = document.getElementById("minivideos");
     if (minividdiv.children.length > 0) {
@@ -187,7 +186,6 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
-        window.watchingLive = false;
         window.response = response;
         let vidlist = "";
         let liveFeeds = [];
@@ -216,7 +214,6 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
             setAsMainVideo(liveFeeds[0].uuid);
           }
           updateMiniVideos();
-          window.watchingLive = true;
         }
         if (urlParams.get("videoID")) {
           console.log("videoID", urlParams.get("videoID"))
