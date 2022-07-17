@@ -53,6 +53,10 @@ window.setAsMainVideo = setAsMainVideo;
 
 function syncMiniVideo(e, videoID) {
   console.log(videoID, e.position)
+  let videoStartTime = window.responses.data.filter(r => r.uuid === videoID)[0].startTime;
+  console.log(startTime);
+  let miniVidTime = videoStartTime + (e.position * 1000)
+  console.log(miniVidTime);
 }
 
 function updateMiniVideos() {
