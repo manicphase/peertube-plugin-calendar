@@ -96,8 +96,8 @@ function copyToClipboard(text) {
       .then(() => {
         alert(`copied "${path}" to clipboard`);
       })
-      .catch(() => {
-        alert("something went wrong");
+      .catch((err) => {
+        alert("something went wrong", err);
       });
   input.parentNode.removeChild(input);
 }
