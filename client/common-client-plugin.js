@@ -16,12 +16,18 @@ function getStartTime(obj) {
 function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
   document.getElementById("timediv").innerHTML = window.globalTime;
-  let currentVideos = response.data.filter(function(n) {
+  if (watchingLive) {
+    window.currentVideos = response.data.filter(function(n) {
+    if (n.isLive) {
+      return true;
+    }})
+  } else {
+    window.currentVideos = response.data.filter(function(n) {
     if (globalTime >= n.startTime && globalTime < n.endTime) {
       return true;
     }
-  })
-  window.currentVideos = currentVideos;
+  })}
+  //window.currentVideos = currentVideos;
   updateMiniVideos();
   const date = new Date(globalTime);
   const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
