@@ -60,6 +60,9 @@ function syncMiniVideo(e, videoID) {
     console.log("skip to ", seektime)
     players[videoID].seek(seektime)
   }
+  if (seektime > window.response.data.filter(r => r.uuid === videoID)[0].duration || seektime < 0) {
+    document.getElement(videoID + "_div").remove();
+  }
 }
 
 window.players = {}
