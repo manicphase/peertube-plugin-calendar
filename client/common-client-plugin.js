@@ -90,6 +90,8 @@ function updateMiniVideos() {
           minividdiv.appendChild(el)
           let player = new PeerTubePlayer(document.getElementById(uuid))
           player.addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
+          player.setVolume(0);
+          player.setResolution(0);
           players[uuid] = player
           //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
@@ -122,7 +124,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo" style="width:700px;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
+      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
