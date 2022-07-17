@@ -157,8 +157,8 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get(timestamp)) window.globalTime = urlParams.get(timestamp);
-        if (urlParams.get(videoID)) setAsMainVideo(urlParams.get(videoID));
+        if (urlParams.get("timestamp")) window.globalTime = urlParams.get("timestamp");
+        if (urlParams.get("videoID")) setAsMainVideo(urlParams.get("videoID"));
         updateMiniVideos();
       })
     }
