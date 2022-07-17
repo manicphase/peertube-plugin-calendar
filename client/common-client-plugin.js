@@ -24,7 +24,7 @@ function updateTime(e) {
   window.currentVideos = currentVideos;
   updateMiniVideos();
   const date = new Date(globalTime);
-  const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds}`
+  const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   document.getElementById("readableTime").innerText = datestring;
 }
 
