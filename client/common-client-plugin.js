@@ -71,6 +71,15 @@ function setAsMainVideo(videoID) {
   mainPlayer.seek((globalTime - mainVideoStats.startTime) / 1000);
   console.log("main volume", globalVolume);
   mainPlayer.setVolume(globalVolume);
+  let liveCheck = response.data.filter(function(n) {
+    if (n.uuid === videoID && n.isLive) {
+      return true;
+    }})
+  if (liveCheck.length > 0) {
+    window.watchingLive = true;
+  } else {
+    window.watchingLive = false;
+  }
 }
 
 function resetAndSetAsMain(videoID) {
