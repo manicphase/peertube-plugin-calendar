@@ -23,6 +23,9 @@ function updateTime(e) {
   })
   window.currentVideos = currentVideos;
   updateMiniVideos();
+  const date = new Date(globalTime);
+  const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds}`
+  document.getElementById("readableTime").innerText = datestring;
 }
 
 function makeEmbedCode(videoID) {
@@ -35,7 +38,9 @@ function handleMainPlaybackStatus(e) {
   console.log("global volume", e.volume);
   if (e.playbackState === "ended") {
     let minividdiv = document.getElementById("minivideos");
-    setAsMainVideo(minividdiv.children[0].id.split("_")[0])
+    if (minividdiv.children) {
+      setAsMainVideo(minividdiv.children[0].id.split("_")[0])
+    }
   }
 }
 
@@ -127,7 +132,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
+      rootEl.innerHTML = '<div id="mainpanel"><h1 id="readableTime"></h1><div>Blah</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
