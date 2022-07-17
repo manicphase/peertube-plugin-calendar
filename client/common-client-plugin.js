@@ -92,7 +92,7 @@ function copyToClipboard(text) {
   input.select();
   input.setSelectionRange(0, 99999);
   navigator.clipboard
-      .writeText(text)
+      .write(text)
       .then(() => {
         alert(`copied "${path}" to clipboard`);
       })
