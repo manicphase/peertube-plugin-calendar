@@ -76,7 +76,8 @@ function updateMiniVideos() {
           el.setAttribute("id", `${uuid}_div`)
           el.innerHTML = makeEmbedCode(uuid) + `<button type="button" onclick='setAsMainVideo("${uuid}")'>Expand</button>`
           minividdiv.appendChild(el)
-          let player = new PeerTubePlayer(document.getElementById(uuid)).addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
+          let player = new PeerTubePlayer(document.getElementById(uuid))
+          player.addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
           players[uuid] = player
           //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
