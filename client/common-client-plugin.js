@@ -25,11 +25,12 @@ function updateTime(e) {
   updateMiniVideos();
   const date = new Date(globalTime);
   const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-  document.getElementById("readableTime").innerText = datestring;
+  let videoTitle = mainVideoStats.name.split("-")[0];
+  document.getElementById("readableTime").innerText = `${videoTitle} ${datestring}`;
 }
 
 function makeEmbedCode(videoID) {
-  return `<iframe id="${videoID}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="100%" height="100%" frameborder="0"></iframe>`
+  return `<iframe id="${videoID}" src="https://${window.location.hostname}/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="100%" height="100%" frameborder="0"></iframe>`
 }
 
 function handleMainPlaybackStatus(e) {
@@ -38,7 +39,7 @@ function handleMainPlaybackStatus(e) {
   console.log("global volume", e.volume);
   if (e.playbackState === "ended") {
     let minividdiv = document.getElementById("minivideos");
-    if (minividdiv.children) {
+    if (minividdiv.children.length > 0) {
       setAsMainVideo(minividdiv.children[0].id.split("_")[0])
     }
   }
@@ -83,6 +84,11 @@ function syncMiniVideo(e, videoID) {
 }
 
 window.players = {}
+
+function createLink() {
+  navigator.clipboard.writeText("testing copy path");
+  alert("copied path to clipboard");
+}
 
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
@@ -132,7 +138,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = '<div id="mainpanel"><h1 id="readableTime"></h1><div>Blah</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
+      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div>Blah</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
