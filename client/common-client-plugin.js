@@ -71,7 +71,7 @@ function setAsMainVideo(videoID) {
   console.log("main volume", globalVolume);
   mainPlayer.setVolume(globalVolume);
   let liveCheck = response.data.filter(function(n) {
-    if (n.uuid === videoID && n.isLive) {
+    if (n.uuid === videoID && n.isLive === true) {
       return true;
     }})
   if (liveCheck.length > 0) {
@@ -151,7 +151,6 @@ function updateMiniVideos() {
           player.setVolume(0);
           player.setResolution(0);
           players[uuid] = player
-          //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
       }
   }
@@ -185,6 +184,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
       rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
       window.watchingLive = true;
+      window.globalVolume = 1;
 
       getLatestVideos().then( function (response) {
         window.response = response;
