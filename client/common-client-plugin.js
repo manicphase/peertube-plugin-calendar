@@ -55,13 +55,14 @@ function syncMiniVideo(e, videoID) {
   let videoStartTime = window.response.data.filter(r => r.uuid === videoID)[0].startTime;
   let miniVidTime = videoStartTime + (e.position * 1000)
   let difference = (globalTime - miniVidTime) / 1000;
-  console.log(difference);
   let seektime = e.position + difference;
-  console.log(seektime)
   if (difference > 1 || difference < -1) {
-    new PeerTubePlayer(document.getElementById(videoID)).seek(seektime)
+    console.log("skip to ", seektime)
+    players[videoID].seek(seektime)
   }
 }
+
+let players = {}
 
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
@@ -75,8 +76,8 @@ function updateMiniVideos() {
           el.setAttribute("id", `${uuid}_div`)
           el.innerHTML = makeEmbedCode(uuid) + `<button type="button" onclick='setAsMainVideo("${uuid}")'>Expand</button>`
           minividdiv.appendChild(el)
-          new PeerTubePlayer(document.getElementById(uuid)).addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
-
+          let player = new PeerTubePlayer(document.getElementById(uuid)).addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
+          players[uuid] = player
           //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
       }
