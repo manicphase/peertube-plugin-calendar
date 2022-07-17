@@ -92,13 +92,14 @@ function copyToClipboard(text) {
   input.select();
   input.setSelectionRange(0, 99999);
   navigator.clipboard
-      .write(text)
+      .writeText(text)
       .then(() => {
         alert(`copied "${path}" to clipboard`);
       })
       .catch((err) => {
-        alert("something went wrong", err);
+        alert("something went wrong, trying exec");
         console.log(error);
+        document.execCommand("copy")
       });
   input.parentNode.removeChild(input);
 }
