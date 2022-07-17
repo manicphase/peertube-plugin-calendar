@@ -32,6 +32,7 @@ function makeEmbedCode(videoID) {
 function handleMainPlaybackStatus(e) {
   updateTime(e);
   window.globalVolume = e.volume;
+  console.log("global volume", e.volume);
   if (e.playbackState === "ended") {
     let minividdiv = document.getElementById("minivideos");
     setAsMainVideo(minividdiv.children[0].id.split("_")[0])
@@ -56,6 +57,7 @@ function setAsMainVideo(videoID) {
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){handleMainPlaybackStatus(e);})
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
   mainPlayer.seek((globalTime - mainVideoStats.startTime) / 1000);
+  console.log("main volume", globalVolume);
   mainPlayer.setVolume(globalVolume);
 }
 
