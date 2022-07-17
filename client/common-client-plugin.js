@@ -98,6 +98,7 @@ function copyToClipboard(text) {
       })
       .catch((err) => {
         alert("something went wrong", err);
+        console.log(error);
       });
   input.parentNode.removeChild(input);
 }
@@ -161,12 +162,6 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
-
-      navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
-        if (result.state == "granted" || result.state == "prompt") {
-          alert("Write access ranted!");
-        }
-      });
 
       getLatestVideos().then( function (response) {
         window.response = response;
