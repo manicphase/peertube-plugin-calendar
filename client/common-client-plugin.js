@@ -67,7 +67,14 @@ function setAsMainVideo(videoID) {
   mainPlayer.setVolume(globalVolume);
 }
 
+function resetAndSetAsMain(videoID) {
+  window.globalTime = window.response.data.filter(r => r.uuid === videoID)[0].startTime;
+  setAsMainVideo(videoID)
+}
+
 window.setAsMainVideo = setAsMainVideo;
+
+window.resetAndSetAsMain = resetAndSetAsMain
 
 function syncMiniVideo(e, videoID) {
   let videoStartTime = window.response.data.filter(r => r.uuid === videoID)[0].startTime;
@@ -120,10 +127,10 @@ function updateMiniVideos() {
       if (!document.getElementById(uuid)) {
         if (uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
-          el.setAttribute("style", "width:200px;display:inline-block;");
+          el.setAttribute("style", "width:200px;display:inline-block;margin:2px;");
           el.setAttribute("onclick", `setAsMainVideo("${uuid}")`)
           el.setAttribute("id", `${uuid}_div`)
-          el.innerHTML = makeEmbedCode(uuid) + `<button type="button" onclick='setAsMainVideo("${uuid}")'>Expand</button>`
+          el.innerHTML = makeEmbedCode(uuid) + `${window.currentVideos[i].name}<button type="button" onclick='setAsMainVideo("${uuid}")'>Focus</button>`
           minividdiv.appendChild(el)
           let player = new PeerTubePlayer(document.getElementById(uuid))
           player.addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
@@ -170,7 +177,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[i]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          let divdata = `<div onclick='setAsMainVideo("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
+          let divdata = `<div onclick='resetAndSetAsMain("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
           vidlist += divdata;
         }
         window.globalTime = response.data[0].startTime;
