@@ -44,7 +44,6 @@ function setAsMainVideo(videoID) {
     mainvideodiv.innerHTML = makeEmbedCode(videoID)
   }
   if (smallVideoDiv) smallVideoDiv.remove();
-  //changeMainVideo(videoID);
   window.mainPlayer = new PeerTubePlayer(mainvideodiv.children[0]);
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
@@ -55,8 +54,6 @@ window.setAsMainVideo = setAsMainVideo;
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
   for (let i=0; i<window.currentVideos.length; i++) {
-      console.log(window.currentVideos);
-      console.log(i);
       if (!document.getElementById(window.currentVideos[i].uuid)) {
         if (window.currentVideos[i].uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
@@ -65,21 +62,12 @@ function updateMiniVideos() {
           el.setAttribute("id", `${window.currentVideos[i].uuid}_div`)
           el.innerHTML = makeEmbedCode(window.currentVideos[i].uuid) + `<button type="button" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'>Expand</button>`
           minividdiv.appendChild(el)
+          
           //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
       }
   }
 }
-
-function changeMainVideo(videoID) {
-  //let embedCode = makeEmbedCode(videoID);
-  //let mainvideodiv = document.getElementById("mainvideo");
-  //mainvideodiv.innerHTML = embedCode;
-  window.mainPlayer = new PeerTubePlayer(document.getElementById("mainvideo").children[0]);
-  window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
-  window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
-}
-
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
@@ -108,7 +96,6 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       rootEl.innerHTML = '<div id="mainpanel"><div>Blah</div><div id="mainvideo" style="width:700px;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>'
       window.PeerTubePlayer = PeerTubePlayer;
-      window.changeMainVideo = changeMainVideo;
 
       getLatestVideos().then( function (response) {
         window.response = response;
@@ -123,7 +110,6 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
         updateMiniVideos();
-        //changeMainVideo(response.data[0].uuid);
       })
     }
   })
