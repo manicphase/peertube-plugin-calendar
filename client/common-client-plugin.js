@@ -85,9 +85,27 @@ function syncMiniVideo(e, videoID) {
 
 window.players = {}
 
+function copyToClipboard(text) {
+  var input = document.body.appendChild(document.createElement("input"));
+  input.value = text;
+  input.focus();
+  input.select();
+  input.setSelectionRange(0, 99999);
+  navigator.clipboard
+      .writeText(input.value)
+      .then(() => {
+        alert("successfully copied");
+      })
+      .catch(() => {
+        alert("something went wrong");
+      });
+  input.parentNode.removeChild(input);
+}
+
 function createLink() {
   let path = `${window.location.href.split("?")[0]}?videoID=${mainVideoStats.uuid}&timestamp=${Math.floor(globalTime)}`
-  navigator.clipboard.writeText(path);
+  //await navigator.clipboard.writeText(path);
+  copyToClipboard(path);
   alert(`copied "${path}" to clipboard`);
 }
 
