@@ -101,7 +101,7 @@ function syncMiniVideo(e, videoID) {
     players[videoID].seek(seektime)
   }
   if (seektime > window.response.data.filter(r => r.uuid === videoID)[0].duration || seektime < 0) {
-    document.getElementById(videoID + "_div").remove();
+    if (!watchingLive) document.getElementById(videoID + "_div").remove();
   }
 }
 
