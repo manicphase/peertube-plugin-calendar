@@ -62,7 +62,7 @@ function syncMiniVideo(e, videoID) {
   }
 }
 
-let players = {}
+window.players = {}
 
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")

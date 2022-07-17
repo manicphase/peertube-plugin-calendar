@@ -1,7 +1,7 @@
 {
   "name": "peertube-plugin-calendar",
   "description": "Calender view for peertube",
-  "version": "0.0.113",
+  "version": "0.0.114",
   "author": "Manicphase",
   "bugs": "https://github.com/manicphase/peertube-plugin-calendar",
   "clientScripts": [
