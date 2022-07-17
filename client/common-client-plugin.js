@@ -184,6 +184,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
+      window.watchingLive = true;
 
       getLatestVideos().then( function (response) {
         window.response = response;
