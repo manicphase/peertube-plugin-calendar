@@ -121,7 +121,7 @@ function createLink() {
 window.createLink = createLink;
 
 function updateMiniVideos() {
-  let minividdiv = document.getElementById("minivideos")
+  let minividdiv = document.getElementById("minivideos");
   for (let i=0; i<window.currentVideos.length; i++) {
       let uuid = window.currentVideos[i].uuid;
       if (!document.getElementById(uuid)) {
@@ -172,13 +172,19 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
+        window.watchingLive = false;
         window.response = response;
         let vidlist = "";
+        let liveFeeds = [];
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[i]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
           let divdata = `<div onclick='resetAndSetAsMain("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
           vidlist += divdata;
+          if (response.data[i].isLive === true) {
+            response.data[i].startTime = Date.now();
+            liveFeeds.push(response.data[i]);
+          }
         }
         window.globalTime = response.data[0].startTime;
         let vidlistdiv = document.getElementById("vidlist");
@@ -187,6 +193,15 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         if (urlParams.get("timestamp")) {
           console.log("global time", urlParams.get("timestamp"))
           window.globalTime = urlParams.get("timestamp");
+        } else if (liveFeeds.length > 0) {
+          if (urlParams.get("videoID")) {
+            console.log("videoID", urlParams.get("videoID"))
+            setAsMainVideo(urlParams.get("videoID"));
+          } else {
+            setAsMainVideo(liveFeeds[0].uuid);
+          }
+          updateMiniVideos();
+          window.watchingLive = true;
         }
         if (urlParams.get("videoID")) {
           console.log("videoID", urlParams.get("videoID"))
