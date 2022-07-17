@@ -90,6 +90,8 @@ function createLink() {
   alert("copied path to clipboard");
 }
 
+window.createLink = createLink;
+
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
   for (let i=0; i<window.currentVideos.length; i++) {
