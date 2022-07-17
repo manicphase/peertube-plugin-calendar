@@ -56,8 +56,10 @@ function syncMiniVideo(e, videoID) {
   let miniVidTime = videoStartTime + (e.position * 1000)
   let difference = (globalTime - miniVidTime) / 1000;
   console.log(difference);
-  if (difference > 1) {
-    new PeerTubePlayer(document.getElementById(videoID)).seek(e.position + difference)
+  let seektime = e.position + difference;
+  console.log(seektime)
+  if (difference > 1 || difference < -1) {
+    new PeerTubePlayer(document.getElementById(videoID)).seek(seektime)
   }
 }
 
