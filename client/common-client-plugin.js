@@ -94,10 +94,10 @@ function copyToClipboard(text) {
   navigator.clipboard
       .writeText(text)
       .then(() => {
-        alert(`copied "${path}" to clipboard`);
+        alert(`copied "${text}" to clipboard`);
       })
       .catch((err) => {
-        alert(`copied "${path}" to clipboard, using exec`);
+        alert(`copied "${text}" to clipboard, using exec`);
         console.log(error);
         document.execCommand("copy")
       });
@@ -177,9 +177,15 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         let vidlistdiv = document.getElementById("vidlist");
         vidlistdiv.innerHTML = vidlist;
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get("timestamp")) window.globalTime = urlParams.get("timestamp");
-        if (urlParams.get("videoID")) setAsMainVideo(urlParams.get("videoID"));
-        updateMiniVideos();
+        if (urlParams.get("timestamp")) {
+          console.log("global time", urlParams.get("timestamp"))
+          window.globalTime = urlParams.get("timestamp");
+        }
+        if (urlParams.get("videoID")) {
+          console.log("videoID", urlParams.get("videoID"))
+          setAsMainVideo(urlParams.get("videoID"));
+          updateMiniVideos();
+        }
       })
     }
   })
