@@ -97,7 +97,7 @@ function copyToClipboard(text) {
         alert(`copied "${path}" to clipboard`);
       })
       .catch((err) => {
-        alert("something went wrong, trying exec");
+        alert(`copied "${path}" to clipboard, using exec`);
         console.log(error);
         document.execCommand("copy")
       });
