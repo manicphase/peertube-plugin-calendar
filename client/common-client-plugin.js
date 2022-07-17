@@ -58,7 +58,7 @@ function syncMiniVideo(e, videoID) {
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
   for (let i=0; i<window.currentVideos.length; i++) {
-      uuid = window.currentVideos[i].uuid;
+      let uuid = window.currentVideos[i].uuid;
       if (!document.getElementById(uuid)) {
         if (uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
