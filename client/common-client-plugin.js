@@ -30,6 +30,14 @@ function makeEmbedCode(videoID) {
   return `<iframe id="${videoID}" src="https://video.manicphase.me/videos/embed/${videoID}?autoplay=1&api=1" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="100%" height="100%" frameborder="0"></iframe>`
 }
 
+function handleMainPlaybackStatus(e) {
+  updateTime(e);
+  if (e.playbackState === "ended") {
+    let minividdiv = document.getElementById("minivideos");
+    setAsMainVideo(minividdiv.children[0].id.split("_")[0])
+  }
+}
+
 function setAsMainVideo(videoID) {
   let mainvideodiv = document.getElementById("mainvideo");
   let smallVideoDiv = document.getElementById(`${videoID}_div`);
@@ -45,7 +53,8 @@ function setAsMainVideo(videoID) {
   }
   if (smallVideoDiv) smallVideoDiv.remove();
   window.mainPlayer = new PeerTubePlayer(mainvideodiv.children[0]);
-  window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
+  mainPlayer.seek((globalTime - mainVideoStats.startTime) / 1000);
+  mainPlayer.addEventListener("playbackStatusUpdate", function(e){handleMainPlaybackStatus(e);})
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
 }
 
