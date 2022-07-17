@@ -120,7 +120,7 @@ function updateMiniVideos() {
       if (!document.getElementById(uuid)) {
         if (uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
-          el.setAttribute("style", "width:200px");
+          el.setAttribute("style", "width:200px;display:inline-block;");
           el.setAttribute("onclick", `setAsMainVideo("${uuid}")`)
           el.setAttribute("id", `${uuid}_div`)
           el.innerHTML = makeEmbedCode(uuid) + `<button type="button" onclick='setAsMainVideo("${uuid}")'>Expand</button>`
