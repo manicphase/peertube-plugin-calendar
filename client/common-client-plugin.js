@@ -44,7 +44,10 @@ function setAsMainVideo(videoID) {
     mainvideodiv.innerHTML = makeEmbedCode(videoID)
   }
   smallVideoDiv.remove();
-  changeMainVideo(videoID);
+  //changeMainVideo(videoID);
+  window.mainPlayer = new PeerTubePlayer(mainvideodiv.children[0]);
+  window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
+  window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
 }
 
 window.setAsMainVideo = setAsMainVideo;
@@ -69,8 +72,8 @@ function updateMiniVideos() {
 }
 
 function changeMainVideo(videoID) {
-  let embedCode = makeEmbedCode(videoID);
-  let mainvideodiv = document.getElementById("mainvideo");
+  //let embedCode = makeEmbedCode(videoID);
+  //let mainvideodiv = document.getElementById("mainvideo");
   //mainvideodiv.innerHTML = embedCode;
   window.mainPlayer = new PeerTubePlayer(document.getElementById("mainvideo").children[0]);
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
