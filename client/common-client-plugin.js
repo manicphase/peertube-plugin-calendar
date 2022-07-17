@@ -51,18 +51,23 @@ function setAsMainVideo(videoID) {
 
 window.setAsMainVideo = setAsMainVideo;
 
+function syncMiniVideo(e, videoID) {
+  console.log(videoID, e.position)
+}
+
 function updateMiniVideos() {
   let minividdiv = document.getElementById("minivideos")
   for (let i=0; i<window.currentVideos.length; i++) {
-      if (!document.getElementById(window.currentVideos[i].uuid)) {
-        if (window.currentVideos[i].uuid !== window.mainVideoStats.uuid) {
+      uuid = window.currentVideos[i].uuid;
+      if (!document.getElementById(uuid)) {
+        if (uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
           el.setAttribute("style", "width:200px");
-          el.setAttribute("onclick", `setAsMainVideo("${window.currentVideos[i].uuid}")`)
-          el.setAttribute("id", `${window.currentVideos[i].uuid}_div`)
-          el.innerHTML = makeEmbedCode(window.currentVideos[i].uuid) + `<button type="button" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'>Expand</button>`
+          el.setAttribute("onclick", `setAsMainVideo("${uuid}")`)
+          el.setAttribute("id", `${uuid}_div`)
+          el.innerHTML = makeEmbedCode(uuid) + `<button type="button" onclick='setAsMainVideo("${uuid}")'>Expand</button>`
           minividdiv.appendChild(el)
-          new PeerTubePlayer(document.getElementById(window.currentVideos[i].uuid)).addEventListener("playbackStatusUpdate", function(e) {console.log(e.position)})
+          new PeerTubePlayer(document.getElementById(uuid)).addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
 
           //minividdiv.appendChild(`<div style="width:200px;" onclick='setAsMainVideo("${window.currentVideos[i].uuid}")'id="${window.currentVideos[i].uuid}_div">${makeEmbedCode(window.currentVideos[i].uuid)}</div>`)
         }
