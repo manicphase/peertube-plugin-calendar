@@ -43,7 +43,7 @@ function setAsMainVideo(videoID) {
   } else {
     mainvideodiv.innerHTML = makeEmbedCode(videoID)
   }
-  smallVideoDiv.remove();
+  if (smallVideoDiv) smallVideoDiv.remove();
   //changeMainVideo(videoID);
   window.mainPlayer = new PeerTubePlayer(mainvideodiv.children[0]);
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){updateTime(e);})
