@@ -94,7 +94,7 @@ function copyToClipboard(text) {
   navigator.clipboard
       .writeText(input.value)
       .then(() => {
-        alert("successfully copied");
+        alert(`copied "${path}" to clipboard`);
       })
       .catch(() => {
         alert("something went wrong");
@@ -106,7 +106,7 @@ function createLink() {
   let path = `${window.location.href.split("?")[0]}?videoID=${mainVideoStats.uuid}&timestamp=${Math.floor(globalTime)}`
   //await navigator.clipboard.writeText(path);
   copyToClipboard(path);
-  alert(`copied "${path}" to clipboard`);
+  //alert(`copied "${path}" to clipboard`);
 }
 
 window.createLink = createLink;
@@ -161,6 +161,12 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
     onMount: ({ rootEl }) => {
       rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
+
+      navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
+        if (result.state == "granted" || result.state == "prompt") {
+          alert("Write access ranted!");
+        }
+      });
 
       getLatestVideos().then( function (response) {
         window.response = response;
