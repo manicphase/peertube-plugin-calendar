@@ -53,9 +53,9 @@ function setAsMainVideo(videoID) {
   }
   if (smallVideoDiv) smallVideoDiv.remove();
   window.mainPlayer = new PeerTubePlayer(mainvideodiv.children[0]);
-  mainPlayer.seek((globalTime - mainVideoStats.startTime) / 1000);
-  mainPlayer.addEventListener("playbackStatusUpdate", function(e){handleMainPlaybackStatus(e);})
+  window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){handleMainPlaybackStatus(e);})
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
+  mainPlayer.seek((globalTime - mainVideoStats.startTime) / 1000);
 }
 
 window.setAsMainVideo = setAsMainVideo;
