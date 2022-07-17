@@ -87,8 +87,8 @@ window.players = {}
 
 function createLink() {
   let path = `${window.location.href.split("?")[0]}?videoID=${mainPlayer.uuid}&timestamp=${Math.floor(globalTime)}`
-  navigator.clipboard.writeText("testing copy path");
-  alert("copied path to clipboard");
+  navigator.clipboard.writeText(path);
+  alert(`copied "${path}" to clipboard`);
 }
 
 window.createLink = createLink;
@@ -141,7 +141,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;font-size:10px;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
+      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
 
       getLatestVideos().then( function (response) {
