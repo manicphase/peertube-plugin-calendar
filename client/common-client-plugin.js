@@ -229,13 +229,6 @@ function makeCalenderEntry(response, i) {
   })
   let height = 4 * (childDepth.length + 2);//= 50 + (50*childDepth.length);
 
-  if (parentDepth.length === 0) {
-      //classes = "entryWrapper lastCard"
-      let timeBreak = document.createElement("div")
-      timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
-      document.getElementById("calendarContainer").appendChild(timeBreak);
-  }
-
   let outer = document.createElement("div")
   outer.setAttribute("class", classes);
   let inner = document.createElement("div");
@@ -245,6 +238,13 @@ function makeCalenderEntry(response, i) {
   outer.appendChild(inner);
   outer.setAttribute("onclick", `resetAndSetAsMain("${obj.uuid}")`);
   document.getElementById("calendarContainer").appendChild(outer);
+
+  if (childDepth.length === 0) {
+    //classes = "entryWrapper lastCard"
+    let timeBreak = document.createElement("div")
+    timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
+    document.getElementById("calendarContainer").appendChild(timeBreak);
+  }
 }
 
 window.makeCalenderEntry = makeCalenderEntry
