@@ -12,6 +12,8 @@
     flex-direction: column;
     max-height: 70vh;
     overflow: auto;
+    width: 100%;
+    border: solid #666 1px;
 }
 
 .entryWrapper {
