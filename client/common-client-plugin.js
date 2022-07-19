@@ -184,7 +184,7 @@ function updateMiniVideos() {
           el.setAttribute("class", "minivideo");
           el.setAttribute("onclick", `setAsMainVideo("${uuid}")`);
           el.setAttribute("id", `${uuid}_div`);
-          el.innerHTML = makeEmbedCode(uuid) + `${window.currentVideos[i].name}<button type="button" onclick='setAsMainVideo("${uuid}")'>Focus</button>`
+          el.innerHTML = makeEmbedCode(uuid) + `<div style="minivideoText">${window.currentVideos[i].name}</div>`
           minividdiv.appendChild(el)
           let player = new PeerTubePlayer(document.getElementById(uuid))
           player.addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
@@ -240,7 +240,7 @@ function makeCalenderEntry(response, i) {
   document.getElementById("calendarContainer").appendChild(outer);
 
   if (childDepth.length === 0) {
-    //classes = "entryWrapper lastCard"
+    outer.setAttribute("class", "entryWrapper lastCard");
     let timeBreak = document.createElement("div")
     timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
     document.getElementById("calendarContainer").appendChild(timeBreak);
