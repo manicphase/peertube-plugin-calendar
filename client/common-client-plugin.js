@@ -13,7 +13,7 @@ function getStartTime(obj) {
       return d;
   }
   let match = obj.name.match(/\d{8}_\d{6}/);
-  if (match.length > 0) {
+  if (match && match.length > 0) {
     let year = match[0].slice(0,4);
     let month = match[0].slice(4,6);
     let day = match[0].slice(6,8);
@@ -24,7 +24,7 @@ function getStartTime(obj) {
     return d;
   }
   match = obj.name.match(/\d{4}-\d{2}-\d{2}\s\d{2}-\d{2}-\d{2}/);
-  if (match.length > 0) {
+  if (match && match.length > 0) {
     let year = match[0].slice(0,4);
     let month = match[0].slice(5,7);
     let day = match[0].slice(8,10);
