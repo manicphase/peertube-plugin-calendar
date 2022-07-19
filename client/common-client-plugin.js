@@ -297,7 +297,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         //let vidlistdiv = document.getElementById("vidlist");
         //vidlistdiv.innerHTML = vidlist;
 
-        for (i=0; i<response.data.length; i++) {
+        for (let i=0; i<response.data.length; i++) {
           makeCalenderEntry(response, i);
         }
 
