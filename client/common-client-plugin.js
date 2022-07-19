@@ -209,7 +209,7 @@ function compare( a, b ) {
 function makeCalenderEntry(response, i) {
   let obj = response.data[i]
   if(i===0 || (new Date(obj.startTime).getDay() !== new Date(response.data[i-1].startTime).getDay())) {
-      dayBreak = document.createElement("div")
+      let dayBreak = document.createElement("div")
       dayBreak.innerHTML = `<h2>${new Date(obj.startTime).toDateString()}</h2>`;
       dayBreak.setAttribute("class", "dayBreak")
       document.getElementById("calendarContainer").appendChild(dayBreak);
@@ -218,26 +218,26 @@ function makeCalenderEntry(response, i) {
   if(i < (response.data.length-1) && (new Date(obj.startTime).getDay() !== new Date(response.data[i+1].startTime).getDay())) {
       classes = "entryWrapper lastCard"
   }
-  parentDepth = response.data.filter(function(o){
+  let parentDepth = response.data.filter(function(o){
       if (obj.startTime > o.startTime && obj.startTime < o.endTime) return true;
   })
   let inset = 20*parentDepth.length;
 
   if (parentDepth.length === 0) {
-      timeBreak = document.createElement("div")
+      let timeBreak = document.createElement("div")
       timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
       //timeBreak.setAttribute("class", "dayBreak")
       document.getElementById("calendarContainer").appendChild(timeBreak);
   }
 
-  childDepth = response.data.filter(function(o){
+  let childDepth = response.data.filter(function(o){
       if (o.startTime > obj.startTime && o.startTime < obj.endTime) return true;
   })
   let height = 4 * (childDepth.length + 2);//= 50 + (50*childDepth.length);
-  outer = document.createElement("div")
+  let outer = document.createElement("div")
   outer.setAttribute("class", classes);
   //outer.setAttribute("style", `height:100px;`)
-  inner = document.createElement("div");
+  let inner = document.createElement("div");
   inner.setAttribute("class", "card");
   inner.setAttribute("style", `margin-left:${inset}px;height:${height}em;`)
   inner.innerHTML = `${obj.name} <br> <img src="https://${window.location.hostname}${obj.thumbnailPath}" class="thumbnail"/>`;
