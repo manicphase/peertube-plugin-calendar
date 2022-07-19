@@ -1,8 +1,9 @@
 .minivideo {
-    background-color: #797979;
-    width:200px;
+    border: solid #666 1px;
+    width:250px;
     display:inline-block;
     margin:2px;
+    max-width: 50vh;
 }
 
 .calendarContainer {
