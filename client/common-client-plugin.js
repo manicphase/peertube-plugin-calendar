@@ -224,6 +224,12 @@ function makeCalenderEntry(response, i) {
   })
   let inset = 20*parentDepth.length;
 
+  
+  let childDepth = response.data.filter(function(o){
+    if (o.startTime > obj.startTime && o.startTime < obj.endTime) return true;
+  })
+  let height = 4 * (childDepth.length + 2);//= 50 + (50*childDepth.length);
+
   if (parentDepth.length === 0 && childDepth.length === 0) {
       classes = "entryWrapper lastCard"
       let timeBreak = document.createElement("div")
@@ -232,10 +238,6 @@ function makeCalenderEntry(response, i) {
       document.getElementById("calendarContainer").appendChild(timeBreak);
   }
 
-  let childDepth = response.data.filter(function(o){
-      if (o.startTime > obj.startTime && o.startTime < obj.endTime) return true;
-  })
-  let height = 4 * (childDepth.length + 2);//= 50 + (50*childDepth.length);
   let outer = document.createElement("div")
   outer.setAttribute("class", classes);
   //outer.setAttribute("style", `height:100px;`)
