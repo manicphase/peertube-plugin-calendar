@@ -242,7 +242,7 @@ function makeCalenderEntry(response, i) {
   inner.setAttribute("style", `margin-left:${inset}px;height:${height}em;`)
   inner.innerHTML = `${obj.name} <br> <img src="https://${window.location.hostname}${obj.thumbnailPath}" class="thumbnail"/>`;
   outer.appendChild(inner);
-  outer.setAttribute("onclick", obj.uuid);
+  outer.setAttribute("onclick", `resetAndSetAsMain("${obj.uuid}")`);
   document.getElementById("calendarContainer").appendChild(outer);
 }
 
