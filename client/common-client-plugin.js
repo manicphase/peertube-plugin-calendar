@@ -20,7 +20,7 @@ function getStartTime(obj) {
     let hour = match[0].slice(9,11);
     let minute = match[0].slice(11,13);
     let second = match[0].slice(13,15);
-    let d = new Date(year, parseInt(month) + 1, day, hour, minute, second);
+    let d = new Date(year, parseInt(month) - 1, day, hour, minute, second);
     return d.getTime();
   }
   match = obj.name.match(/\d{4}-\d{2}-\d{2}\s\d{2}-\d{2}-\d{2}/);
@@ -31,7 +31,7 @@ function getStartTime(obj) {
     let hour = match[0].slice(11,13);
     let minute = match[0].slice(14,16);
     let second = match[0].slice(17,19);
-    let d = new Date(year, parseInt(month) + 1, day, hour, minute, second);
+    let d = new Date(year, parseInt(month) - 1, day, hour, minute, second);
     return d.getTime();
   }
   return new Date(obj.createdAt).getTime();
