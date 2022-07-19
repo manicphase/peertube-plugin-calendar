@@ -4,3 +4,54 @@
     display:inline-block;
     margin:2px;
 }
+
+.calendarContainer {
+    display: flex;
+    align-content: center;
+    max-width: 35em;
+    flex-direction: column;
+}
+
+.entryWrapper {
+    overflow-y: visible;
+    height: 4em;
+    width: 100%;
+}
+
+.entryWrapper:last-child, .entryWrapper:hover, .card:hover, .entryWrapper.lastCard {
+    overflow-y: visible;
+    height: 10em;
+}
+
+.card {
+    right:0%;
+    min-width: 10em;
+    height: 3em;
+    border-radius: 0.2em;
+    border: solid #666 1px;
+    background-color: rgb(255, 255, 255);
+    padding: 0.25em;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+}
+
+.dayBreak {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.timeBreak {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.thumbnail {
+    width: 10em;
+}
+
+.calendar-entry {
+    display: flex;
+    color: red;
+}

@@ -196,6 +196,57 @@ function updateMiniVideos() {
   }
 }
 
+function compare( a, b ) {
+  if ( a.startTime < b.startTime ){
+      return -1;
+  }
+  if ( a.startTime > b.startTime ){
+      return 1;
+  }
+  return 0;
+}
+
+function makeCalenderEntry(response, i) {
+  let obj = response.data[i]
+  if(i===0 || (new Date(obj.startTime).getDay() !== new Date(response.data[i-1].startTime).getDay())) {
+      dayBreak = document.createElement("div")
+      dayBreak.innerHTML = `<h2>${new Date(obj.startTime).toDateString()}</h2>`;
+      dayBreak.setAttribute("class", "dayBreak")
+      document.getElementById("calendarContainer").appendChild(dayBreak);
+  }
+  let classes = "entryWrapper"
+  if(i < (response.data.length-1) && (new Date(obj.startTime).getDay() !== new Date(response.data[i+1].startTime).getDay())) {
+      classes = "entryWrapper lastCard"
+  }
+  parentDepth = response.data.filter(function(o){
+      if (obj.startTime > o.startTime && obj.startTime < o.endTime) return true;
+  })
+  let inset = 20*parentDepth.length;
+
+  if (parentDepth.length === 0) {
+      timeBreak = document.createElement("div")
+      timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
+      //timeBreak.setAttribute("class", "dayBreak")
+      document.getElementById("calendarContainer").appendChild(timeBreak);
+  }
+
+  childDepth = response.data.filter(function(o){
+      if (o.startTime > obj.startTime && o.startTime < obj.endTime) return true;
+  })
+  let height = 4 * (childDepth.length + 2);//= 50 + (50*childDepth.length);
+  outer = document.createElement("div")
+  outer.setAttribute("class", classes);
+  //outer.setAttribute("style", `height:100px;`)
+  inner = document.createElement("div");
+  inner.setAttribute("class", "card");
+  inner.setAttribute("style", `margin-left:${inset}px;height:${height}em;`)
+  inner.innerHTML = `${obj.name} <br> <img src="https://${window.location.hostname}${obj.thumbnailPath}" class="thumbnail"/>`;
+  outer.appendChild(inner);
+  document.getElementById("calendarContainer").appendChild(outer);
+}
+
+window.makeCalenderEntry = makeCalenderEntry
+
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
   registerHook({
@@ -221,7 +272,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="vidlist"></div></div>`
+      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="calendarContainer"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
       window.watchingLive = true;
       window.globalVolume = 1;
@@ -233,16 +284,22 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[i]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          let divdata = `<div onclick='resetAndSetAsMain("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
-          vidlist += divdata;
+          //let divdata = `<div onclick='resetAndSetAsMain("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
+          //vidlist += divdata;
           if (response.data[i].isLive === true) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
           }
         }
+        response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
-        let vidlistdiv = document.getElementById("vidlist");
-        vidlistdiv.innerHTML = vidlist;
+        //let vidlistdiv = document.getElementById("vidlist");
+        //vidlistdiv.innerHTML = vidlist;
+
+        for (i=0; i<response.data.length; i++) {
+          makeCalenderEntry(response, i);
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("timestamp")) {
           console.log("global time", urlParams.get("timestamp"))
