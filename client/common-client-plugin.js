@@ -13,6 +13,12 @@ function getStartTime(obj) {
   } else return 0
 }
 
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
   document.getElementById("timediv").innerHTML = window.globalTime;
@@ -30,7 +36,7 @@ function updateTime(e) {
   //window.currentVideos = currentVideos;
   updateMiniVideos();
   const date = new Date(globalTime);
-  const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+  const datestring = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}  ${pad(date.getHours(),2)}:${pad(date.getMinutes(),2)}:${pad(date.getSeconds(),2)}`
   let videoTitle = mainVideoStats.name.split("-")[0];
   document.getElementById("readableTime").innerText = `${videoTitle} ${datestring}`;
 }
@@ -141,9 +147,10 @@ function updateMiniVideos() {
       if (!document.getElementById(uuid)) {
         if (uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
+          el.setAttribute("class", "minivideo");
           el.setAttribute("style", "width:200px;display:inline-block;margin:2px;");
-          el.setAttribute("onclick", `setAsMainVideo("${uuid}")`)
-          el.setAttribute("id", `${uuid}_div`)
+          el.setAttribute("onclick", `setAsMainVideo("${uuid}")`);
+          el.setAttribute("id", `${uuid}_div`);
           el.innerHTML = makeEmbedCode(uuid) + `${window.currentVideos[i].name}<button type="button" onclick='setAsMainVideo("${uuid}")'>Focus</button>`
           minividdiv.appendChild(el)
           let player = new PeerTubePlayer(document.getElementById(uuid))
