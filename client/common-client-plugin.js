@@ -54,7 +54,6 @@ window.setMainVideoHeight = setMainVideoHeight;
 
 function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
-  document.getElementById("timediv").innerHTML = window.globalTime;
   if (watchingLive) {
     window.currentVideos = response.data.filter(function(n) {
     if (n.isLive) {
@@ -277,7 +276,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div><div id="timediv"></div><div id="minivideos"></div><div id="calendarContainer" class="calendarContainer"></div></div>`
+      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="mainvideo" style="width:100%;height:400px;"></div></div><div id="minivideos"></div><h2>Calendar</h2><div id="calendarContainer" class="calendarContainer"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
       window.watchingLive = true;
       window.globalVolume = 1;
