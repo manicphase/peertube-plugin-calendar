@@ -184,7 +184,7 @@ function updateMiniVideos() {
           el.setAttribute("class", "minivideo");
           el.setAttribute("onclick", `setAsMainVideo("${uuid}")`);
           el.setAttribute("id", `${uuid}_div`);
-          el.innerHTML = makeEmbedCode(uuid) + `<div style="minivideoText">${window.currentVideos[i].name}</div>`
+          el.innerHTML = makeEmbedCode(uuid) + `<div class="minivideoText">${window.currentVideos[i].name}</div>`
           minividdiv.appendChild(el)
           let player = new PeerTubePlayer(document.getElementById(uuid))
           player.addEventListener("playbackStatusUpdate", function(e) {syncMiniVideo(e, uuid)})
