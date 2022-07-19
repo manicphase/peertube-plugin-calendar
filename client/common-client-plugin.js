@@ -148,7 +148,6 @@ function updateMiniVideos() {
         if (uuid !== window.mainVideoStats.uuid) {
           let el = document.createElement("div")
           el.setAttribute("class", "minivideo");
-          el.setAttribute("style", "width:200px;display:inline-block;margin:2px;");
           el.setAttribute("onclick", `setAsMainVideo("${uuid}")`);
           el.setAttribute("id", `${uuid}_div`);
           el.innerHTML = makeEmbedCode(uuid) + `${window.currentVideos[i].name}<button type="button" onclick='setAsMainVideo("${uuid}")'>Focus</button>`
