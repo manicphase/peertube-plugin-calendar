@@ -7,10 +7,11 @@ async function getLatestVideos () {
 }
 
 function getStartTime(obj) {
-  let d = new Date(obj.name.split("-")[1]).getTime()
-  if (d) {
-    return d
-  } else return 0
+  let regex = /\d{1,2}\/\d{1,2}\/\d{4}.*\d{1,2}:\d{1,2}:\d{1,2}\s[P|A]M/
+  if (regex.test(obj.name) == true) {
+    let d = new Date(obj.name.split("-")[1]).getTime()
+      return d
+  }
 }
 
 function pad(n, width, z) {
@@ -19,10 +20,11 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
-function setMainVideoHeight(frameDiv) {
+function setMainVideoHeight(resolution) {
+  console.log("RESOLUTION", resolution);
   let actualWidth = frameDiv.offsetWidth;
   let resolutions = mainPlayer.getResolutions()[0];
-  
+
 }
 
 window.setMainVideoHeight = setMainVideoHeight;
@@ -62,7 +64,6 @@ function handleMainPlaybackStatus(e) {
       setAsMainVideo(minividdiv.children[0].id.split("_")[0])
     }
   }
-  setMainVideoHeight(document.getElementById("mainvideo"));
 }
 
 function setAsMainVideo(videoID) {
@@ -81,6 +82,7 @@ function setAsMainVideo(videoID) {
   if (smallVideoDiv) smallVideoDiv.remove();
   window.mainPlayer = new PeerTubePlayer(mainvideodiv.children[0]);
   window.mainPlayer.addEventListener("playbackStatusUpdate", function(e){handleMainPlaybackStatus(e);})
+  window.mainPlayer.getResolutions(res => setMainVideoHeight(res))
   window.mainVideoStats = response.data.filter(n => n.uuid === videoID)[0];
   mainPlayer.seek((globalTime - mainVideoStats.startTime) / 1000);
   console.log("main volume", globalVolume);
@@ -110,7 +112,7 @@ function syncMiniVideo(e, videoID) {
   let miniVidTime = videoStartTime + (e.position * 1000)
   let difference = (globalTime - miniVidTime) / 1000;
   let seektime = e.position + difference;
-  if (difference > 1 || difference < -1) {
+  if (difference > 0.25 || difference < -0.25) {
     console.log("skip to ", seektime)
     players[videoID].seek(seektime)
   }
