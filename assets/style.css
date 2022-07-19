@@ -11,7 +11,10 @@
 }
 
 .minivideoContainer {
-    max-height: 250px
+    max-height: 250px;
+    display: flex;
+    align-items: stretch;
+    flex-direction:row;
 }
 
 .minivideoText {
