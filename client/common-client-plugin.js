@@ -119,6 +119,7 @@ function setAsMainVideo(videoID) {
   } else {
     window.watchingLive = false;
   }
+  mainvideodiv.scrollIntoView();
 }
 
 function resetAndSetAsMain(videoID) {
@@ -224,6 +225,7 @@ function makeCalenderEntry(response, i) {
   let inset = 20*parentDepth.length;
 
   if (parentDepth.length === 0) {
+      classes = "entryWrapper lastCard"
       let timeBreak = document.createElement("div")
       timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
       //timeBreak.setAttribute("class", "dayBreak")
@@ -280,13 +282,10 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
       getLatestVideos().then( function (response) {
         window.response = response;
-        let vidlist = "";
         let liveFeeds = [];
         for (let i=0; i<response.data.length; i++) {
           response.data[i].startTime = getStartTime(response.data[i]);
           response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          //let divdata = `<div onclick='resetAndSetAsMain("${response.data[i].uuid.trim()}")' id="${response.data[i].shortUUID}">${response.data[i].name}</div>`;
-          //vidlist += divdata;
           if (response.data[i].isLive === true) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
@@ -294,12 +293,13 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         }
         response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
-        //let vidlistdiv = document.getElementById("vidlist");
-        //vidlistdiv.innerHTML = vidlist;
 
         for (let i=0; i<response.data.length; i++) {
           makeCalenderEntry(response, i);
         }
+
+        let calenderContainer = document.getElementById("calendarContainer");
+        calenderContainer.scrollTop = calenderContainer.scrollHeight;
 
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("timestamp")) {
