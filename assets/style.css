@@ -1,9 +1,10 @@
 .minivideo {
     border: solid #666 1px;
     width:250px;
+    max-height: 50vw;
     display:inline-block;
     margin:2px;
-    max-width: 50vh;
+    max-width: 50vw;
     background-color: whitesmoke;
 }
 
