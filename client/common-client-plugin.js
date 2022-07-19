@@ -19,6 +19,12 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
+function setMainVideoHeight(iframe) {
+  iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
+}
+
+window.setMainVideoHeight = setMainVideoHeight;
+
 function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
   document.getElementById("timediv").innerHTML = window.globalTime;
@@ -54,6 +60,7 @@ function handleMainPlaybackStatus(e) {
       setAsMainVideo(minividdiv.children[0].id.split("_")[0])
     }
   }
+  setMainVideoHeight(document.getElementById("mainvideo"));
 }
 
 function setAsMainVideo(videoID) {
