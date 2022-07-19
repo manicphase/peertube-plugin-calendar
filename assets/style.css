@@ -9,6 +9,7 @@
     align-items: stretch;
     flex-direction:column;
     height: 100%;
+    min-height: 100%;
 }
 
 .minivideoContainer {
@@ -20,6 +21,7 @@
 
 .minivideoText {
     height: 100%;
+    min-height: 100%;
 }
 
 .calendarContainer {
