@@ -230,7 +230,7 @@ function makeCalenderEntry(response, i) {
   let height = 4 * (childDepth.length + 2);//= 50 + (50*childDepth.length);
 
   if (parentDepth.length === 0) {
-      classes = "entryWrapper lastCard"
+      //classes = "entryWrapper lastCard"
       let timeBreak = document.createElement("div")
       timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
       document.getElementById("calendarContainer").appendChild(timeBreak);

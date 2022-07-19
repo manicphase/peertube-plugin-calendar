@@ -4,6 +4,7 @@
     display:inline-block;
     margin:2px;
     max-width: 50vh;
+    background-color: whitesmoke;
 }
 
 .calendarContainer {
