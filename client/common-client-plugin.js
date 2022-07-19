@@ -19,8 +19,10 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
-function setMainVideoHeight(iframe) {
-  iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
+function setMainVideoHeight(frameDiv) {
+  let actualWidth = frameDiv.offsetWidth;
+  let resolutions = mainPlayer.getResolutions()[0];
+  
 }
 
 window.setMainVideoHeight = setMainVideoHeight;
