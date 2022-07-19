@@ -10,8 +10,31 @@ function getStartTime(obj) {
   let regex = /\d{1,2}\/\d{1,2}\/\d{4}.*\d{1,2}:\d{1,2}:\d{1,2}\s[P|A]M/
   if (regex.test(obj.name) == true) {
     let d = new Date(obj.name.split("-")[1]).getTime()
-      return d
+      return d;
   }
+  let match = obj.name.match(/\d{8}_\d{6}/);
+  if (match.length > 0) {
+    let year = match[0].slice(0,4);
+    let month = match[0].slice(4,6);
+    let day = match[0].slice(6,8);
+    let hour = match[0].slice(9,11);
+    let minute = match[0].slice(11,13);
+    let second = match[0].slice(13,15);
+    let d = new Date(year, month, day, hour, minute, second);
+    return d;
+  }
+  match = obj.name.match(/\d{4}-\d{2}-\d{2}\s\d{2}-\d{2}-\d{2}/);
+  if (match.length > 0) {
+    let year = match[0].slice(0,4);
+    let month = match[0].slice(5,7);
+    let day = match[0].slice(8,10);
+    let hour = match[0].slice(11,13);
+    let minute = match[0].slice(14,16);
+    let second = match[0].slice(17,19);
+    let d = new Date(year, month, day, hour, minute, second);
+    return d;
+  }
+  return 0;
 }
 
 function pad(n, width, z) {
@@ -112,7 +135,7 @@ function syncMiniVideo(e, videoID) {
   let miniVidTime = videoStartTime + (e.position * 1000)
   let difference = (globalTime - miniVidTime) / 1000;
   let seektime = e.position + difference;
-  if (difference > 0.25 || difference < -0.25) {
+  if (difference > 0.5 || difference < -0.5) {
     console.log("skip to ", seektime)
     players[videoID].seek(seektime)
   }
