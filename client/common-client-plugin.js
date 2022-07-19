@@ -34,7 +34,7 @@ function getStartTime(obj) {
     let d = new Date(year, month, day, hour, minute, second);
     return d.getTime();
   }
-  return new Date(mainVideoStats.createdAt).getTime();
+  return new Date(obj.createdAt).getTime();
 }
 
 function pad(n, width, z) {
