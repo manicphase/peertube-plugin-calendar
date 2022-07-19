@@ -1,11 +1,15 @@
 .minivideo {
     border: solid #666 1px;
     width:250px;
-    max-height: 50vw;
+    height: 100%;
     display:inline-block;
     margin:0px;
     max-width: 50vw;
     background-color: whitesmoke;
+}
+
+.minivideoContainer {
+    max-height: 250px
 }
 
 .calendarContainer {
