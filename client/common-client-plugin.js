@@ -233,13 +233,11 @@ function makeCalenderEntry(response, i) {
       classes = "entryWrapper lastCard"
       let timeBreak = document.createElement("div")
       timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
-      //timeBreak.setAttribute("class", "dayBreak")
       document.getElementById("calendarContainer").appendChild(timeBreak);
   }
 
   let outer = document.createElement("div")
   outer.setAttribute("class", classes);
-  //outer.setAttribute("style", `height:100px;`)
   let inner = document.createElement("div");
   inner.setAttribute("class", "card");
   inner.setAttribute("style", `margin-left:${inset}px;height:${height}em;`)
