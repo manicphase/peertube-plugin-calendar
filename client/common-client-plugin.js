@@ -299,10 +299,8 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
           } else if (response.data[i].isLive === true) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
-          } else {
-            console.log("DUMPING", response.data[i]);
-            response.data.pop(i--);
           }
+          response.data.filter(r => r.startTime !== undefined)
         }
         response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
