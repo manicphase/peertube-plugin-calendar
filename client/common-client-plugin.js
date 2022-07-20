@@ -300,7 +300,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
           }
-          response.data.filter(r => (r.startTime !== undefined && r.startTime.toString !== "Invalid Date"))
+          response.data.filter(r => (r.startTime !== undefined && r.startTime.toString() !== "Invalid Date"))
         }
         response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
