@@ -243,9 +243,9 @@ function makeCalenderEntry(response, i) {
   inner.setAttribute("style", `margin-left:${inset}px;height:${height}em;`)
   let nameDiv = `<div class="calendarNameDiv">${obj.name}</div>`;
   let usernameDiv = `<div class="calendarUsernameDiv">${obj.account.name}</div>`;
-  let descriptionDiv = `<div class="calendarDescriptionDiv">${obj.description}</div>`;
+  let descriptionDiv = `<div class="calendarDescriptionDiv">${obj.description ?? ''}</div>`;
   let detailsContainer = `<div class="calendarDetailsContainer">${usernameDiv}<br>${descriptionDiv}</div>`;
-  let thumbnail = `<img src="https://${document.location.href}${obj.thumbnailPath}" class="calendarThumbnail"/>`
+  let thumbnail = `<img src="https://${document.location.host}${obj.thumbnailPath}" class="calendarThumbnail"/>`
   inner.innerHTML = `${nameDiv} <div class="calendarInfoDiv">${thumbnail} ${detailsContainer}</div>`;
   outer.appendChild(inner);
   outer.setAttribute("onclick", `resetAndSetAsMain("${obj.uuid}")`);
