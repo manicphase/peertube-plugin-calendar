@@ -300,6 +300,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
           } else {
+            console.log("DUMPING", response.data[i]);
             response.data.pop(i--);
           }
         }
