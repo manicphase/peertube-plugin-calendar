@@ -295,7 +295,9 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
           } else if (response.data[i].isLive === true) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
-          } else response.data.pop(i);
+          } else {
+            response.data.pop(i--);
+          }
         }
         response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
