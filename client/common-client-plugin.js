@@ -289,7 +289,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         let liveFeeds = [];
         for (let i=0; i<response.data.length; i++) {
           let startTime = getStartTime(response.data[i]);
-          if (startTime) {
+          if (startTime && startTime.toString !== "Invalid Date") {
             response.data[i].startTime = startTime;
             response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000);
           } else if (response.data[i].isLive === true) {
