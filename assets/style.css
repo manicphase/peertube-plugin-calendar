@@ -62,7 +62,7 @@
     width: 100%;
 }
 
-.entryWrapper:last-child, .entryWrapper:hover, .card:hover, .entryWrapper.lastCard {
+.entryWrapper:last-child, .entryWrapper:hover, .entryWrapper.lastCard {
     overflow-y: visible;
     height: 10em;
 }
