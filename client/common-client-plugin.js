@@ -1,5 +1,5 @@
-async function getLatestVideos () {
-  let path = '/api/v1/videos?start=0&count=25&sort=-publishedAt&skipCount=true&isLocal=false&nsfw=false'; 
+async function getLatestVideos (start, count) {
+  let path = `/api/v1/videos?start=${start}&count=${count}&sort=-publishedAt&skipCount=true&isLocal=false&nsfw=false`; 
   let request = await fetch(path);
   let response = await request.json();
   console.log(response);
@@ -252,6 +252,10 @@ function makeCalenderEntry(response, i) {
   document.getElementById("calendarContainer").appendChild(outer);
 }
 
+function addVideos() {
+
+}
+
 window.makeCalenderEntry = makeCalenderEntry
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
@@ -284,7 +288,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
       window.watchingLive = true;
       window.globalVolume = 1;
 
-      getLatestVideos().then( function (response) {
+      getLatestVideos(0,50).then( function (response) {
         window.response = response;
         let liveFeeds = [];
         for (let i=0; i<response.data.length; i++) {
