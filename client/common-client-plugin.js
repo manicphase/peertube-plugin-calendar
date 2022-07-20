@@ -224,7 +224,13 @@ function makeCalenderEntry(response, i) {
   })
   let inset = 20*parentDepth.length;
 
-  
+  if (parentDepth.length === 0) {
+    classes = "entryWrapper lastCard";
+    let timeBreak = document.createElement("div")
+    timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
+    document.getElementById("calendarContainer").appendChild(timeBreak);
+  }
+
   let childDepth = response.data.filter(function(o){
     if (o.startTime > obj.startTime && o.startTime < obj.endTime) return true;
   })
@@ -233,19 +239,12 @@ function makeCalenderEntry(response, i) {
   let outer = document.createElement("div")
   outer.setAttribute("class", classes);
   let inner = document.createElement("div");
-  inner.setAttribute("class", "card");
+  inner.setAttribute("class", "calendarCard");
   inner.setAttribute("style", `margin-left:${inset}px;height:${height}em;`)
   inner.innerHTML = `${obj.name} <br> <img src="https://${window.location.hostname}${obj.thumbnailPath}" class="thumbnail"/>`;
   outer.appendChild(inner);
   outer.setAttribute("onclick", `resetAndSetAsMain("${obj.uuid}")`);
   document.getElementById("calendarContainer").appendChild(outer);
-
-  if (childDepth.length === 0) {
-    outer.setAttribute("class", "entryWrapper lastCard");
-    let timeBreak = document.createElement("div")
-    timeBreak.innerHTML = `<h4 class="timeBreak">${new Date(obj.startTime).toTimeString()}</h4>`;
-    document.getElementById("calendarContainer").appendChild(timeBreak);
-  }
 }
 
 window.makeCalenderEntry = makeCalenderEntry

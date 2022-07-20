@@ -4,7 +4,7 @@
     display:inline-block;
     margin:0px;
     max-width: 50vw;
-    background-color: whitesmoke;
+    background-color: black;
     display: flex;
     align-items: stretch;
     flex-direction:column;
@@ -24,6 +24,7 @@
     height: 100%;
     min-height: 3em;
     max-height: 3em;
+    color: white;
 }
 
 .allVideoContainer {
@@ -31,6 +32,7 @@
     flex-flow: column;
     height: calc(100vh - 50px);
     max-height: calc(120vw - 50px);
+    background-color: black;
 }
 
 .calendarContainer {
@@ -55,7 +57,7 @@
     height: 10em;
 }
 
-.card {
+.calendarCard {
     right:0%;
     min-width: 10em;
     height: 3em;
