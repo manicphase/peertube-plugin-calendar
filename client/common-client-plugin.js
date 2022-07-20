@@ -119,7 +119,7 @@ function setAsMainVideo(videoID) {
     window.watchingLive = false;
   }
   mainvideodiv.scrollIntoView();
-  window.scrollBy(0, -50);
+  window.scrollBy(0, -document.getElementsByClassName("header")[0].offsetHeight);
 }
 
 function resetAndSetAsMain(videoID) {
@@ -319,6 +319,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
           setAsMainVideo(urlParams.get("videoID"));
           updateMiniVideos();
         }
+        if (document.getElementById("mainvideo").childNodes.length === 0) document.getElementById("calendarContainer").scrollIntoView();
       })
     }
   })
