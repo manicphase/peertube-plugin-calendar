@@ -119,7 +119,7 @@ function setAsMainVideo(videoID) {
     window.watchingLive = false;
   }
   mainvideodiv.scrollIntoView();
-  window.scrollBy(0, 10);
+  window.scrollBy(0, -50);
 }
 
 function resetAndSetAsMain(videoID) {
