@@ -34,7 +34,7 @@ function getStartTime(obj) {
     let d = new Date(year, parseInt(month) - 1, day, hour, minute, second);
     return d.getTime();
   }
-  return new Date(obj.createdAt).getTime();
+  return false; //new Date(obj.createdAt).getTime();
 }
 
 function pad(n, width, z) {
@@ -288,12 +288,14 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         window.response = response;
         let liveFeeds = [];
         for (let i=0; i<response.data.length; i++) {
-          response.data[i].startTime = getStartTime(response.data[i]);
-          response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000); 
-          if (response.data[i].isLive === true) {
+          let startTime = getStartTime(response.data[i]);
+          if (startTime) {
+            response.data[i].startTime = startTime;
+            response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000);
+          } else if (response.data[i].isLive === true) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
-          }
+          } else response.data.pop(i);
         }
         response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
