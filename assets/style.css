@@ -25,6 +25,11 @@
     min-height: 3em;
 }
 
+.allVideoContainer {
+    height: calc(100vh - 50px);
+    max-height: 70vw;
+}
+
 .calendarContainer {
     display: flex;
     align-content: center;
