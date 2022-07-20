@@ -26,6 +26,8 @@
 }
 
 .allVideoContainer {
+    display: flex;
+    flex-flow: column;
     height: calc(100vh - 50px);
     max-height: 70vw;
 }
