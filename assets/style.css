@@ -46,6 +46,16 @@
     border: solid #666 1px;
 }
 
+.calendarInfoDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+.calendarDetailsContainer {
+    margin: 5px;
+}
+
+
 .entryWrapper {
     overflow-y: visible;
     height: 4em;
