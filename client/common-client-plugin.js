@@ -1,5 +1,6 @@
-async function getLatestVideos (start, count) {
-  let path = `/api/v1/videos?start=${start}&count=${count}&sort=-publishedAt&skipCount=true&isLocal=false&nsfw=false`; 
+async function getLatestVideos (start, count, tag) {
+  //let path = `/api/v1/videos?start=${start}&count=${count}&sort=-publishedAt&skipCount=true&nsfw=false`; 
+  let path = `/api/v1/search/videos?start=${start}&count=${count}&tagsOneOf=${tag}&sort=-publishedAt&searchTarget=local`;
   let request = await fetch(path);
   let response = await request.json();
   console.log(response);
@@ -51,6 +52,21 @@ function setMainVideoHeight(resolution) {
 }
 
 window.setMainVideoHeight = setMainVideoHeight;
+
+function redirectForTag() {
+  let tag = document.getElementById("tagInput").value;
+  location.href=`https://${location.host}/p/calendar?tag=${tag}`
+}
+
+window.redirectForTag = redirectForTag;
+
+window.defaultMainPanel = `<div id="introduction" class="calendarIntroduction"><h2>Welcome to calendar view.</h2>
+                              Tag videos and livestreams with a unique or shared tag to create a time synchronised playlist. <br>
+                              i.e. If you and a friend both stream a multiplayer game and both tag your streams with #CoopGameStream <br>
+                              you can enter "CoopGameStream" in the box below to create a playlist which allows real time switching between videos <br>
+                              <input type ="text" id="tagInput"/>
+                              <input type="button" onclick="redirectForTag()" value="Create Calendar"/><br><br>
+                              note: only live videos and VODs with timestamps in titles are included for now</div>`
 
 function updateTime(e) {
   window.globalTime = window.mainVideoStats.startTime + (e.position * 1000)
@@ -167,7 +183,7 @@ function copyToClipboard(text) {
 }
 
 function createLink() {
-  let path = `${window.location.href.split("?")[0]}?videoID=${mainVideoStats.uuid}&timestamp=${Math.floor(globalTime)}`
+  let path = `${window.location.href.split("?")[0]}?videoID=${mainVideoStats.uuid}&timestamp=${Math.floor(globalTime)}&tag=${tag}`
   //await navigator.clipboard.writeText(path);
   copyToClipboard(path);
   //alert(`copied "${path}" to clipboard`);
@@ -252,11 +268,34 @@ function makeCalenderEntry(response, i) {
   document.getElementById("calendarContainer").appendChild(outer);
 }
 
-function addVideos() {
+function addVideos(start, count, tag) {
+  getLatestVideos(start,count,tag).then( function (response) {
+    let liveFeeds = [];
+    console.log(response);
+    for (let i=0; i<response.data.length; i++) {
+      let startTime = getStartTime(response.data[i]);
+      if (startTime) {
+        response.data[i].startTime = startTime;
+        response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000);
+      } else if (response.data[i].isLive === true) {
+        response.data[i].startTime = Date.now();
+        liveFeeds.push(response.data[i]);
+      }
+    }
+    response.data = response.data.filter(r => r.startTime !== undefined);
+    window.response.data.concat(response.data);
+    response.data.sort(compare);
 
+    for (let i=0; i<response.data.length; i++) {
+      makeCalenderEntry(response, i);
+    }
+    console.log(response);
+  })
 }
 
-window.makeCalenderEntry = makeCalenderEntry
+window.addVideos = addVideos;
+
+window.makeCalenderEntry = makeCalenderEntry;
 
 function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
 
@@ -283,27 +322,43 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="allVideoContainer" class="allVideoContainer"><div id="mainvideo" style="width:100%;height:100%;"></div><div id="minivideos" class="minivideoContainer"></div></div></div><h2>Calendar</h2><div id="calendarContainer" class="calendarContainer"></div></div>`
+      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="allVideoContainer" class="allVideoContainer"><div id="mainvideo" class="mainVideo"></div><div id="minivideos" class="minivideoContainer"></div></div></div><h2>Calendar</h2><div id="calendarContainer" class="calendarContainer"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
       window.watchingLive = true;
       window.globalVolume = 1;
+      const urlParams = new URLSearchParams(window.location.search);
+      let tag = urlParams.get("tag") ?? "live";
+      window.tag = tag;
+      let mainVideo = document.getElementById("mainvideo");
+      mainVideo.innerHTML = defaultMainPanel;
 
-      getLatestVideos(0,50).then( function (response) {
+      getLatestVideos(0,100,tag).then( function (response) {
         window.response = response;
         let liveFeeds = [];
         for (let i=0; i<response.data.length; i++) {
           let startTime = getStartTime(response.data[i]);
-          if (startTime && startTime.toString !== "Invalid Date") {
+          console.log(response.data[i].name, startTime);
+          if (startTime) {
             response.data[i].startTime = startTime;
             response.data[i].endTime = response.data[i].startTime + (response.data[i].duration * 1000);
           } else if (response.data[i].isLive === true) {
             response.data[i].startTime = Date.now();
             liveFeeds.push(response.data[i]);
           }
-          response.data = response.data.filter(r => r.startTime !== undefined)
+          console.log(response.data)
         }
+        response.data = response.data.filter(r => r.startTime !== undefined)
+        
+
+        //await addVideos(0,50);
+        //console.log("BLAH", window.response)
+
+        //addVideos(0,50).then(function(response) {
+
+
         response.data.sort(compare);
         window.globalTime = response.data[0].startTime;
+
 
         for (let i=0; i<response.data.length; i++) {
           makeCalenderEntry(response, i);
@@ -312,7 +367,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
         let calenderContainer = document.getElementById("calendarContainer");
         calenderContainer.scrollTop = calenderContainer.scrollHeight;
 
-        const urlParams = new URLSearchParams(window.location.search);
+        //const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("timestamp")) {
           console.log("global time", urlParams.get("timestamp"))
           window.globalTime = urlParams.get("timestamp");
