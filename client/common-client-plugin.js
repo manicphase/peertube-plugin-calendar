@@ -322,7 +322,7 @@ function register ({ registerClientRoute, registerHook, peertubeHelpers }) {
   registerClientRoute({
     route: '/calendar',
     onMount: ({ rootEl }) => {
-      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="allVideoContainer" class="allVideoContainer"><div id="mainvideo" class="mainVideo"></div><div id="minivideos" class="minivideoContainer"></div></div></div><h2>Calendar</h2><div id="calendarContainer" class="calendarContainer"></div></div>`
+      rootEl.innerHTML = `<div id="mainpanel"><h1 id="readableTime" onclick="createLink()"></h1><div style="color:grey;">(click header to copy link to moment)</div><div id="allVideoContainer" class="allVideoContainer"><div id="mainvideo" class="mainVideo"></div><div id="minivideos" class="minivideoContainer"></div></div></div><div style="color:grey;" onclick="document.getElementById('allVideoContainer').requestFullscreen()">(click here to enable full screen)</div><h2>Calendar</h2><div id="calendarContainer" class="calendarContainer"></div></div>`
       window.PeerTubePlayer = PeerTubePlayer;
       window.watchingLive = true;
       window.globalVolume = 1;
